@@ -1,0 +1,61 @@
+logging:
+  level:
+    com.zelusik.eatery: debug
+    org:
+      hibernate.SQL: debug
+      springframework.jdbc: debug
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+
+---
+# Settings for local(dev)
+management.endpoints.web.exposure.include: "*"
+
+spring:
+  config.activate.on-profile: local
+  datasource:
+    url: ${EATERY_LOCAL_DB_URL}
+    username: ${EATERY_LOCAL_DB_USERNAME}
+    password: ${EATERY_LOCAL_DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+
+---
+# Settings for production
+logging:
+  level:
+    com.zelusik.eatery: info
+    org:
+      hibernate.SQL: info
+      springframework.jdbc: info
+
+spring:
+  config.activate.on-profile: prod
+  datasource:
+    url: ${EATERY_PROD_DB_URL}
+    username: ${EATERY_PROD_DB_USERNAME}
+    password: ${EATERY_PROD_DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+
+---
+# Settings for test
+spring:
+  config.activate.on-profile: test
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate.ddl-auto: create
