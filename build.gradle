@@ -22,12 +22,18 @@ dependencies {
     // Spring Boot Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // Spring AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     // Spring Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // Spring Security
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
 //    testImplementation 'org.springframework.security:spring-security-test'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
 
     // Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
