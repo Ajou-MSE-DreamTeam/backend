@@ -19,12 +19,12 @@ management.endpoints.web.exposure.include: "*"
 spring:
   config.activate.on-profile: local
   datasource:
-    url: ${EATERY_LOCAL_DB_URL}
-    username: ${EATERY_LOCAL_DB_USERNAME}
-    password: ${EATERY_LOCAL_DB_PASSWORD}
+    url: ${DG_LOCAL_DB_URL}
+    username: ${DG_LOCAL_DB_USERNAME}
+    password: ${DG_LOCAL_DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: create
 
 ---
 # Settings for production
@@ -38,9 +38,9 @@ logging:
 spring:
   config.activate.on-profile: prod
   datasource:
-    url: ${EATERY_PROD_DB_URL}
-    username: ${EATERY_PROD_DB_USERNAME}
-    password: ${EATERY_PROD_DB_PASSWORD}
+    url: ${DG_PROD_DB_URL}
+    username: ${DG_PROD_DB_USERNAME}
+    password: ${DG_PROD_DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
