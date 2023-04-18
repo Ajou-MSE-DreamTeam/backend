@@ -24,7 +24,7 @@ spring:
     password: ${DG_LOCAL_DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
 
 ---
 # Settings for production
