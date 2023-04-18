@@ -2,6 +2,7 @@ package ajou.mse.dimensionguard.controller;
 
 import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
+import ajou.mse.dimensionguard.dto.member.response.AccountIdExistenceResponse;
 import ajou.mse.dimensionguard.dto.member.response.MemberResponse;
 import ajou.mse.dimensionguard.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -41,5 +39,10 @@ public class MemberController {
         return ResponseEntity
                 .created(URI.create("/api/members/" + savedMember.getId()))
                 .body(MemberResponse.from(savedMember));
+    }
+
+    @GetMapping("/nickname/existence")
+    public AccountIdExistenceResponse checkAccountIdExistence(@RequestParam String id) {
+        return AccountIdExistenceResponse.of(memberService.checkAccountIdExistence(id));
     }
 }

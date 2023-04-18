@@ -27,6 +27,10 @@ public class MemberService {
         return MemberDto.from(savedMember);
     }
 
+    public boolean checkAccountIdExistence(String accountId) {
+        return memberRepository.existsByAccountId(accountId);
+    }
+
     private void validateDuplicatedAccountId(String accountId) {
         if (memberRepository.existsByAccountId(accountId)) {
             throw new AccountIdDuplicateException();
