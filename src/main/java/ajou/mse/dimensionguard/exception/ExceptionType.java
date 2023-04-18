@@ -2,7 +2,11 @@ package ajou.mse.dimensionguard.exception;
 
 import ajou.mse.dimensionguard.constant.exception.ValidationErrorCode;
 import ajou.mse.dimensionguard.domain.Member;
+import ajou.mse.dimensionguard.exception.auth.AccountIdNotFoundException;
+import ajou.mse.dimensionguard.exception.auth.PasswordNotValidException;
+import ajou.mse.dimensionguard.exception.auth.TokenValidateException;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
+import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -76,9 +80,19 @@ public enum ExceptionType {
     BIND(1314, "Request binding에 실패했습니다. 요청 데이터를 확인해주세요.", BindException.class),
 
     /**
+     * 로그인, 인증 관련 예외
+     */
+    ACCESS_DENIED(1500, "접근이 거부되었습니다.", null),
+    UNAUTHORIZED(1501, "유효하지 않은 인증 정보로 인해 인증 과정에서 문제가 발생하였습니다.", null),
+    TOKEN_VALIDATE(1502, "유효하지 않은 token입니다. Token 값이 잘못되었거나 만료되어 유효하지 않은 경우로 token 갱신이 필요합니다.", TokenValidateException.class),
+    ACCOUNT_ID_NOT_FOUND(1503, "유효하지 않은 ID입니다.", AccountIdNotFoundException.class),
+    PASSWORD_NOT_VALID(1504, "유효하지 않은 비밀번호입니다.", PasswordNotValidException.class),
+
+    /**
      * 회원({@link Member}) 관련 예외
      */
     ACCOUNT_ID_DUPLICATE(2000, "이미 사용중인 id입니다.", AccountIdDuplicateException.class),
+    MEMBER_ID_NOT_FOUND(2001, "일치하는 회원을 찾을 수 없습니다.", MemberIdNotFoundException.class),
     ;
 
     private final Integer code;
