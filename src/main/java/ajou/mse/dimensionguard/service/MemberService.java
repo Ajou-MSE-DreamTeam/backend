@@ -4,11 +4,14 @@ import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
+import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,7 +30,21 @@ public class MemberService {
         return MemberDto.from(savedMember);
     }
 
-    public boolean checkAccountIdExistence(String accountId) {
+    private Member findEntityById(Integer memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberIdNotFoundException(memberId));
+    }
+
+    public MemberDto findDtoById(Integer memberId) {
+        return MemberDto.from(findEntityById(memberId));
+    }
+
+    public Optional<MemberDto> findOptionalDtoByAccountId(String accountId) {
+        return memberRepository.findByAccountId(accountId)
+                .map(MemberDto::from);
+    }
+
+    public boolean existsByAccountId(String accountId) {
         return memberRepository.existsByAccountId(accountId);
     }
 

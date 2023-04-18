@@ -1,24 +1,34 @@
 package ajou.mse.dimensionguard.config;
 
+import ajou.mse.dimensionguard.security.JwtAccessDeniedHandler;
+import ajou.mse.dimensionguard.security.JwtAuthenticationEntryPoint;
+import ajou.mse.dimensionguard.security.JwtAuthenticationFilter;
+import ajou.mse.dimensionguard.security.JwtExceptionFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
 
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtExceptionFilter jwtExceptionFilter;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private static final String BASE_URL = "/api";
     private static final String[] AUTH_WHITE_LIST = {
             "/members",
             "/members/id/existence",
-            "/auth/login/**"
+            "/auth/login"
     };
 
     @Bean
@@ -37,11 +47,12 @@ public class SecurityConfig {
                                     auth.mvcMatchers(BASE_URL + authWithListElem).permitAll());
                     auth.anyRequest().authenticated();
                 })
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionFilter, jwtAuthenticationFilter.getClass())
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                )
                 .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
