@@ -1,6 +1,8 @@
 package ajou.mse.dimensionguard.exception;
 
 import ajou.mse.dimensionguard.constant.exception.ValidationErrorCode;
+import ajou.mse.dimensionguard.domain.Member;
+import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ import java.util.Optional;
  *     <li>13XX: API/Controller 관련 예외</li>
  *     <li>14XX: DB 관련 예외</li>
  *     <li>15XX: 인증 관련 예외</li>
+ *     <li>2000 ~ 2499: 회원({@link Member}) 관련 예외</li>
  * </ul>
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -71,6 +74,11 @@ public enum ExceptionType {
     NO_HANDLER_FOUND(1312, "알 수 없는 에러가 발생했으며, 에러를 처리할 handler를 찾지 못했습니다.", NoHandlerFoundException.class),
     ASYNC_REQUEST_TIMEOUT(1313, "요청에 대한 응답 시간이 초과되었습니다.", AsyncRequestTimeoutException.class),
     BIND(1314, "Request binding에 실패했습니다. 요청 데이터를 확인해주세요.", BindException.class),
+
+    /**
+     * 회원({@link Member}) 관련 예외
+     */
+    ACCOUNT_ID_DUPLICATE(2000, "이미 사용중인 id입니다.", AccountIdDuplicateException.class),
     ;
 
     private final Integer code;
