@@ -41,6 +41,11 @@ public class MemberController {
                 .body(MemberResponse.from(savedMember));
     }
 
+    @Operation(
+            summary = "계정 id 중복 여부 확인",
+            description = "<p>이미 사용중인 id인지 확인합니다." +
+                    "<p>사용중인 id라면 <code>true</code>를, 사용중이지 않은 id라면 <code>false</code>를 반환합니다."
+    )
     @GetMapping("/nickname/existence")
     public AccountIdExistenceResponse checkAccountIdExistence(@RequestParam String id) {
         return AccountIdExistenceResponse.of(memberService.checkAccountIdExistence(id));
