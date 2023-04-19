@@ -38,10 +38,9 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
         Member member = memberService.findEntityById(loginMemberId);
 
-        Player player = playerService.save(Hero.of(member, room));
-        room.getPlayers().add(player);
+        playerService.save(Hero.of(member, room));
 
-        return RoomDto.from(room);
+        return RoomDto.from(room);  // players lazy loading
     }
 
     public Room findEntityById(Integer roomId) {
@@ -54,7 +53,7 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
 
         if (room.getStatus() != RoomStatus.READY) {
-            Player player = playerService.findEntityByMemberId(loginMemberId);
+            Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
             player.setReady();
             return true;
         }
@@ -67,7 +66,7 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
         room.start();
 
-        Player player = playerService.findEntityByMemberId(loginMemberId);
+        Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
         player.setReady();
 
         return RoomDto.from(room);

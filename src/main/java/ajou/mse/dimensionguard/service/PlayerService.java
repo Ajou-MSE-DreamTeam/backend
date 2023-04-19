@@ -2,7 +2,7 @@ package ajou.mse.dimensionguard.service;
 
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Player;
-import ajou.mse.dimensionguard.exception.player.PlayerByMemberIdNotFoundException;
+import ajou.mse.dimensionguard.exception.player.PlayerByMemberAndRoomNotFoundException;
 import ajou.mse.dimensionguard.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,9 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Player findEntityByMemberId(Integer memberId) {
-        return playerRepository.findByMember_Id(memberId)
-                .orElseThrow(() -> new PlayerByMemberIdNotFoundException(memberId));
+    public Player findEntityByMemberIdAndRoomId(Integer memberId, Integer roomId) {
+        return playerRepository.findByMember_IdAndRoom_Id(memberId, roomId)
+                .orElseThrow(() -> new PlayerByMemberAndRoomNotFoundException(memberId, roomId));
     }
 
     public List<Player> findAllEntityByRoom(Room room) {
