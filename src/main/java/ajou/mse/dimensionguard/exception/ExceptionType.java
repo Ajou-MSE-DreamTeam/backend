@@ -2,11 +2,15 @@ package ajou.mse.dimensionguard.exception;
 
 import ajou.mse.dimensionguard.constant.exception.ValidationErrorCode;
 import ajou.mse.dimensionguard.domain.Member;
+import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.exception.auth.AccountIdNotFoundException;
 import ajou.mse.dimensionguard.exception.auth.PasswordNotValidException;
 import ajou.mse.dimensionguard.exception.auth.TokenValidateException;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
+import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
+import ajou.mse.dimensionguard.exception.room.GameStartException;
+import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,6 +44,7 @@ import java.util.Optional;
  *     <li>14XX: DB 관련 예외</li>
  *     <li>15XX: 인증 관련 예외</li>
  *     <li>2000 ~ 2499: 회원({@link Member}) 관련 예외</li>
+ *     <li>2500 ~ 2999: 게임 룸({@link Room}) 관련 예외</li>
  * </ul>
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -93,6 +98,13 @@ public enum ExceptionType {
      */
     ACCOUNT_ID_DUPLICATE(2000, "이미 사용중인 id입니다.", AccountIdDuplicateException.class),
     MEMBER_ID_NOT_FOUND(2001, "일치하는 회원을 찾을 수 없습니다.", MemberIdNotFoundException.class),
+
+    /**
+     * 게임 룸({@link Room}) 관련 예외
+     */
+    ROOM_ID_NOT_FOUND(2500, "게임 룸을 찾을 수 없습니다.", RoomIdNotFoundException.class),
+    GAME_START(2501, "알 수 없는 이유로 게임을 시작할 수 없습니다.", GameStartException.class),
+    EVERYONE_NOT_READY(2502, "참가자 전원의 준비가 되지 않았습니다. 네트워크 문제일 수 있습니다.", EveryoneNotReadyException.class),
     ;
 
     private final Integer code;

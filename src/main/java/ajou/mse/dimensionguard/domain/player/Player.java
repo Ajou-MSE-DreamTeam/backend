@@ -5,6 +5,7 @@ import ajou.mse.dimensionguard.domain.Room;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -28,16 +29,29 @@ public abstract class Player {
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
+    @Setter(AccessLevel.PRIVATE)
+    @Column(nullable = false)
+    private Boolean isReady;
+
     @Column(nullable = false)
     private Integer hp;
 
     @Column(nullable = false)
     private Integer energy;
 
-    protected Player(Integer id, Member member, Room room, Integer hp, Integer energy) {
+    public void setReady() {
+        this.setIsReady(true);
+    }
+
+    public void setNotReady() {
+        this.setIsReady(false);
+    }
+
+    protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
         this.id = id;
         this.member = member;
         this.room = room;
+        this.isReady = isReady;
         this.hp = hp;
         this.energy = energy;
     }
