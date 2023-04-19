@@ -38,10 +38,9 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
         Member member = memberService.findEntityById(loginMemberId);
 
-        Player player = playerService.save(Hero.of(member, room));
-        room.getPlayers().add(player);
+        playerService.save(Hero.of(member, room));
 
-        return RoomDto.from(room);
+        return RoomDto.from(room);  // players lazy loading
     }
 
     public Room findEntityById(Integer roomId) {
