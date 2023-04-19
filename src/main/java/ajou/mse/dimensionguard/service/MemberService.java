@@ -30,7 +30,7 @@ public class MemberService {
         return MemberDto.from(savedMember);
     }
 
-    private Member findEntityById(Integer memberId) {
+    public Member findEntityById(Integer memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberIdNotFoundException(memberId));
     }
