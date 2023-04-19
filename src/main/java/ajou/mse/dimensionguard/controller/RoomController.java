@@ -5,7 +5,7 @@ import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.GameStartResponse;
 import ajou.mse.dimensionguard.dto.room.response.RoomResponse;
 import ajou.mse.dimensionguard.security.UserPrincipal;
-import ajou.mse.dimensionguard.service.GameSyncService;
+import ajou.mse.dimensionguard.gameService.GameSyncService;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

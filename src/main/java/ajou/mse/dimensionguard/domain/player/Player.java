@@ -1,5 +1,6 @@
 package ajou.mse.dimensionguard.domain.player;
 
+import ajou.mse.dimensionguard.domain.BaseTimeEntity;
 import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.domain.Room;
 import lombok.AccessLevel;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 @Entity
-public abstract class Player {
+public abstract class Player extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
