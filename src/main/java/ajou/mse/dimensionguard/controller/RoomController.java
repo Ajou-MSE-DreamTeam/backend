@@ -93,13 +93,17 @@ public class RoomController {
             summary = "게임 시작",
             description = "<p>게임을 시작합니다." +
                     "<p>모든 플레이어의 통신 상태가 정상적일 경우(모든 플레이어에게 게임 시작 여부가 전달되었을 경우)에야 요청에 대한 응답을 처리합니다." +
-                    "<p>게임 시작 API 호출 후 10초 동안 모든 플레이",
+                    "<p>게임 시작 API 호출 후 10초 동안 모든 플레이어가 준비되지 않았다면 에러(2502)를 발생시킵니다.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = RoomResponse.class))),
-            @ApiResponse(description = "[2501] 서버 내부 오류로 인해 thread sleep이 중단된 경우", responseCode = "500", content = @Content),
-            @ApiResponse(description = "[2502] 참가자들 중 일부 인원이 준비되지 않은 경우. 주로 \"게임 시작 여부 확인\" API를 호출하지 않을 경우에 발생", responseCode = "500", content = @Content)
+            @ApiResponse(
+                    description = "<p>[2501] 서버 내부 오류로 인해 thread sleep이 중단된 경우" +
+                            "<p>[2502] 참가자들 중 일부 인원이 준비되지 않은 경우. 주로 \"게임 시작 여부 확인\" API를 호출하지 않을 경우에 발생",
+                    responseCode = "500",
+                    content = @Content
+            )
     })
     @PatchMapping("/{roomId}/start")
     public RoomResponse gameStart(
