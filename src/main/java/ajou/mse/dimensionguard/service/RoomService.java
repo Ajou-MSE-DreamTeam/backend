@@ -8,7 +8,6 @@ import ajou.mse.dimensionguard.domain.player.Hero;
 import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
-import ajou.mse.dimensionguard.repository.PlayerRepository;
 import ajou.mse.dimensionguard.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class RoomService {
 
     @Transactional
     public RoomDto join(Integer loginMemberId, Integer roomId) {
-        Room room = findEntityById(roomId);
+        Room room = this.findEntityById(roomId);
         Member member = memberService.findEntityById(loginMemberId);
 
         Player player = playerService.save(Hero.of(member, room));
@@ -45,14 +44,14 @@ public class RoomService {
         return RoomDto.from(room);
     }
 
-    private Room findEntityById(Integer roomId) {
+    public Room findEntityById(Integer roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
     @Transactional
     public boolean checkGameStarted(Integer loginMemberId, Integer roomId) {
-        Room room = findEntityById(roomId);
+        Room room = this.findEntityById(roomId);
 
         if (room.getStatus() != RoomStatus.READY) {
             Player player = playerService.findEntityByMemberId(loginMemberId);
@@ -61,5 +60,23 @@ public class RoomService {
         }
 
         return false;
+    }
+
+    @Transactional
+    public RoomDto gameStart(Integer loginMemberId, Integer roomId) {
+        Room room = this.findEntityById(roomId);
+        room.start();
+
+        Player player = playerService.findEntityByMemberId(loginMemberId);
+        player.setReady();
+
+        return RoomDto.from(room);
+    }
+
+    @Transactional
+    public void init(Integer roomId) {
+        Room room = this.findEntityById(roomId);
+        room.init();
+        room.getPlayers().forEach(Player::setNotReady);
     }
 }

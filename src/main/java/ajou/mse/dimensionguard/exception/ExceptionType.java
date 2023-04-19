@@ -8,6 +8,8 @@ import ajou.mse.dimensionguard.exception.auth.PasswordNotValidException;
 import ajou.mse.dimensionguard.exception.auth.TokenValidateException;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
+import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
+import ajou.mse.dimensionguard.exception.room.GameStartException;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
@@ -101,6 +103,8 @@ public enum ExceptionType {
      * 게임 룸({@link Room}) 관련 예외
      */
     ROOM_ID_NOT_FOUND(2500, "게임 룸을 찾을 수 없습니다.", RoomIdNotFoundException.class),
+    GAME_START(2501, "알 수 없는 이유로 게임을 시작할 수 없습니다.", GameStartException.class),
+    EVERYONE_NOT_READY(2502, "참가자 전원의 준비가 되지 않았습니다. 네트워크 문제일 수 있습니다.", EveryoneNotReadyException.class),
     ;
 
     private final Integer code;

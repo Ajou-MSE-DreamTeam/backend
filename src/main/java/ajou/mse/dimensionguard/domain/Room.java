@@ -2,10 +2,7 @@ package ajou.mse.dimensionguard.domain;
 
 import ajou.mse.dimensionguard.constant.room.RoomStatus;
 import ajou.mse.dimensionguard.domain.player.Player;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +19,7 @@ public class Room {
     @Column(name = "room_id")
     private Integer id;
 
+    @Setter(AccessLevel.PRIVATE)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
@@ -37,6 +35,18 @@ public class Room {
                 .id(id)
                 .status(status)
                 .build();
+    }
+
+    public void init() {
+        this.setStatus(RoomStatus.READY);
+    }
+
+    public void start() {
+        this.setStatus(RoomStatus.IN_PROGRESS);
+    }
+
+    public void end() {
+        this.setStatus(RoomStatus.DONE);
     }
 
     @Builder(access = AccessLevel.PRIVATE)

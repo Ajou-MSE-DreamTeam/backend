@@ -43,6 +43,10 @@ public abstract class Player {
         this.setIsReady(true);
     }
 
+    public void setNotReady() {
+        this.setIsReady(false);
+    }
+
     protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
         this.id = id;
         this.member = member;
