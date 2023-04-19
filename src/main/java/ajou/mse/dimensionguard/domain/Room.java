@@ -1,12 +1,16 @@
 package ajou.mse.dimensionguard.domain;
 
 import ajou.mse.dimensionguard.constant.room.RoomStatus;
+import ajou.mse.dimensionguard.domain.player.Player;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -20,6 +24,9 @@ public class Room {
 
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
+
+    @OneToMany(mappedBy = "room")
+    private List<Player> players = new LinkedList<>();
 
     public static Room of() {
         return of(null, RoomStatus.READY);

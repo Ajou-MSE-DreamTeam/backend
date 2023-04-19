@@ -1,5 +1,6 @@
 package ajou.mse.dimensionguard.controller;
 
+import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.RoomResponse;
 import ajou.mse.dimensionguard.security.UserPrincipal;
@@ -11,11 +12,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.List;
 
 @Tag(name = "게임 룸")
 @RequiredArgsConstructor
@@ -39,6 +42,28 @@ public class RoomController {
 
         return ResponseEntity
                 .created(URI.create("/api/rooms/" + roomDto.getId()))
+                .body(RoomResponse.from(roomDto));
+    }
+
+    @Operation(
+            summary = "게임 룸 참가",
+            description = "<p>게임 룸(대기실)에 참가합니다." +
+                    "<p>참가한 플레이어는 hero player가 됩니다.",
+            security = @SecurityRequirement(name = "access-token")
+    )
+    @PostMapping("/{roomId}/join")
+    public ResponseEntity<RoomResponse> join(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @Parameter(
+                    description = "PK of room",
+                    example = "1"
+            ) @PathVariable Integer roomId
+    ) {
+        RoomDto roomDto = roomService.join(userPrincipal.getMemberId(), roomId);
+        List<PlayerDto> players = roomDto.getPlayerDtos();
+
+        return ResponseEntity
+                .created(URI.create("/api/players/" + players.get(players.size() - 1).getId()))
                 .body(RoomResponse.from(roomDto));
     }
 }
