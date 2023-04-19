@@ -28,14 +28,15 @@ public class Hero extends Player {
     private Integer motion;
 
     public static Hero of(Member member, Room room) {
-        return of(null, member, room, HERO_MAX_HP, HERO_MAX_ENERGY, null, null, null);
+        return of(null, member, room, false, HERO_MAX_HP, HERO_MAX_ENERGY, null, null, null);
     }
 
-    public static Hero of(Integer id, Member member, Room room, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion) {
+    public static Hero of(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion) {
         return Hero.builder()
                 .id(id)
                 .member(member)
                 .room(room)
+                .isReady(isReady)
                 .hp(hp)
                 .energy(energy)
                 .pos(pos)
@@ -45,8 +46,8 @@ public class Hero extends Player {
     }
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Hero(Integer id, Member member, Room room, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion) {
-        super(id, member, room, hp, energy);
+    private Hero(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion) {
+        super(id, member, room, isReady, hp, energy);
         this.pos = pos;
         this.damageDealt = damageDealt;
         this.motion = motion;

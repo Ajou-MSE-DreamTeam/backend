@@ -20,21 +20,22 @@ public class Boss extends Player {
     public static final int BOSS_MAX_ENERGY = 100;
 
     public static Boss of(Member member, Room room) {
-        return of(null, member, room, BOSS_MAX_HP, BOSS_MAX_ENERGY);
+        return of(null, member, room, false, BOSS_MAX_HP, BOSS_MAX_ENERGY);
     }
 
-    public static Boss of(Integer id, Member member, Room room, Integer hp, Integer energy) {
+    public static Boss of(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
         return Boss.builder()
                 .id(id)
                 .member(member)
                 .room(room)
+                .isReady(isReady)
                 .hp(hp)
                 .energy(energy)
                 .build();
     }
 
     @Builder(access = AccessLevel.PROTECTED)
-    private Boss(Integer id, Member member, Room room, Integer hp, Integer energy) {
-        super(id, member, room, hp, energy);
+    private Boss(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
+        super(id, member, room, isReady, hp, energy);
     }
 }
