@@ -1,5 +1,6 @@
 package ajou.mse.dimensionguard.service;
 
+import ajou.mse.dimensionguard.constant.room.RoomStatus;
 import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Boss;
@@ -40,5 +41,10 @@ public class RoomService {
     private Room findEntityById(Integer roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
+    }
+
+    public boolean checkGameStarted(Integer roomId) {
+        Room room = findEntityById(roomId);
+        return room.getStatus() != RoomStatus.READY;
     }
 }
