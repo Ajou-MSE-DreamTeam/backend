@@ -1,9 +1,11 @@
-package ajou.mse.dimensionguard.service;
+package ajou.mse.dimensionguard.gameService;
 
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
 import ajou.mse.dimensionguard.exception.room.GameStartException;
+import ajou.mse.dimensionguard.service.PlayerService;
+import ajou.mse.dimensionguard.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,9 +40,6 @@ public class GameSyncService {
     private boolean checkDeliveredToEveryone(Room room) {
         entityManager.clear();
         List<Player> players = playerService.findAllEntityByRoom(room);
-        players.forEach(player -> {
-            System.out.println("player[" + player.getMember().getAccountId() + "].ready = " + player.getIsReady());
-        });
         return players.stream().allMatch(Player::getIsReady);
     }
 }
