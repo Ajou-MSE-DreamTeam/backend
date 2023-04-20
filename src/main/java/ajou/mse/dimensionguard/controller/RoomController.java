@@ -3,9 +3,10 @@ package ajou.mse.dimensionguard.controller;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.GameStartResponse;
+import ajou.mse.dimensionguard.dto.room.response.RoomCompactResponse;
 import ajou.mse.dimensionguard.dto.room.response.RoomResponse;
-import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.gameService.GameSyncService;
+import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,12 +73,25 @@ public class RoomController {
     }
 
     @Operation(
+            summary = "대기실 목록 조회",
+            description = "<p>대기실(게임이 아직 시작되지 않은 게임 룸) 전체 목록을 조회합니다",
+            security = @SecurityRequirement(name = "access-token")
+    )
+    @GetMapping
+    public List<RoomCompactResponse> searchWaitingRoom() {
+        return roomService.findAllByStatusReady().stream()
+                .map(RoomCompactResponse::from)
+                .toList();
+    }
+
+    @Operation(
             summary = "게임 시작 여부 확인",
             description = "<p>특정 게임 룸에 대해 게임 시작 여부를 확인합니다." +
                     "<p>게임이 진행중이거나 종료된 경우에는 <code>true</code>를, 게임이 아직 시작되지 않은 상태라면 <code>false</code>를 응답합니다.",
             security = @SecurityRequirement(name = "access-token")
     )
     @GetMapping("/{roomId}/start")
+
     public GameStartResponse checkGameStarted(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(

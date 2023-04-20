@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -46,6 +48,12 @@ public class RoomService {
     public Room findEntityById(Integer roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
+    }
+
+    public List<RoomDto> findAllByStatusReady() {
+        return roomRepository.findAllByStatus(RoomStatus.READY).stream()
+                .map(RoomDto::from)
+                .toList();
     }
 
     @Transactional
