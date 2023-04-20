@@ -5,6 +5,7 @@ import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.GameStartResponse;
 import ajou.mse.dimensionguard.dto.room.response.RoomCompactResponse;
 import ajou.mse.dimensionguard.dto.room.response.RoomResponse;
+import ajou.mse.dimensionguard.dto.room.response.WaitingRoomListResponse;
 import ajou.mse.dimensionguard.gameService.GameSyncService;
 import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.service.RoomService;
@@ -78,10 +79,12 @@ public class RoomController {
             security = @SecurityRequirement(name = "access-token")
     )
     @GetMapping
-    public List<RoomCompactResponse> searchWaitingRoom() {
-        return roomService.findAllByStatusReady().stream()
-                .map(RoomCompactResponse::from)
-                .toList();
+    public WaitingRoomListResponse searchWaitingRoom() {
+        return WaitingRoomListResponse.of(
+                roomService.findAllByStatusReady().stream()
+                        .map(RoomCompactResponse::from)
+                        .toList()
+        );
     }
 
     @Operation(
