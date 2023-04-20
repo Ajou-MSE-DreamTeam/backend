@@ -63,9 +63,11 @@ public class RoomService {
     }
 
     @Transactional
-    public RoomDto gameStart(Integer loginMemberId, Integer roomId) {
+    public RoomDto ready(Integer loginMemberId, Integer roomId) {
         Room room = this.findEntityById(roomId);
-        room.start();
+        if (room.getStatus() == RoomStatus.READY) {
+            room.start();
+        }
 
         Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
         player.setReady();
