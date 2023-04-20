@@ -3,11 +3,13 @@ package ajou.mse.dimensionguard.exception;
 import ajou.mse.dimensionguard.constant.exception.ValidationErrorCode;
 import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.domain.Room;
+import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.exception.auth.AccountIdNotFoundException;
 import ajou.mse.dimensionguard.exception.auth.PasswordNotValidException;
 import ajou.mse.dimensionguard.exception.auth.TokenValidateException;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
+import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
 import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
 import ajou.mse.dimensionguard.exception.room.GameStartException;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
@@ -45,6 +47,7 @@ import java.util.Optional;
  *     <li>15XX: 인증 관련 예외</li>
  *     <li>2000 ~ 2499: 회원({@link Member}) 관련 예외</li>
  *     <li>2500 ~ 2999: 게임 룸({@link Room}) 관련 예외</li>
+ *     <li>3000 ~ 3399: 플레이어({@link Player}) 관련 예외</li>
  * </ul>
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -104,7 +107,12 @@ public enum ExceptionType {
      */
     ROOM_ID_NOT_FOUND(2500, "게임 룸을 찾을 수 없습니다.", RoomIdNotFoundException.class),
     GAME_START(2501, "알 수 없는 이유로 게임을 시작할 수 없습니다.", GameStartException.class),
-    EVERYONE_NOT_READY(2502, "참가자 전원의 준비가 되지 않았습니다. 네트워크 문제일 수 있습니다.", EveryoneNotReadyException.class),
+    EVERYONE_NOT_READY(2502, "참가자들의 준비를 기다렸으나, 참가자 전원의 준비가 되지 않았습니다.", EveryoneNotReadyException.class),
+
+    /**
+     * 플레이어({@link Player}) 관련 예외
+     */
+    PLAYER_NOT_FOUND_BY_MEMBER_AND_ROOM(3000, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberAndRoomException.class)
     ;
 
     private final Integer code;

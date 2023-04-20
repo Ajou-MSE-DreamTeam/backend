@@ -96,44 +96,43 @@ public class RoomController {
     @GetMapping("/{roomId}/start")
 
     public GameStartResponse checkGameStarted(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
                     example = "1"
             ) @PathVariable Integer roomId
     ) {
-        boolean isStarted = roomService.checkGameStarted(userPrincipal.getMemberId(), roomId);
+        boolean isStarted = roomService.checkGameStarted(roomId);
         return GameStartResponse.of(isStarted);
     }
 
     @Operation(
-            summary = "게임 시작",
-            description = "<p>게임을 시작합니다." +
-                    "<p>모든 플레이어의 통신 상태가 정상적일 경우(모든 플레이어에게 게임 시작 여부가 전달되었을 경우)에야 요청에 대한 응답을 처리합니다." +
-                    "<p>게임 시작 API 호출 후 10초 동안 모든 플레이어가 준비되지 않았다면 에러(2502)를 발생시킵니다.",
+            summary = "게임 준비",
+            description = "<p>게임 준비를 수행합니다." +
+                    "<p>대기실에 있는 player를 ready 상태로 변경합니다." +
+                    "<p>모든 플레이어가 ready 상태가 되었을 때 요청에 대한 응답을 반환합니다." +
+                    "<p>API 호출 후 15초 동안 모든 플레이어가 준비되기를 기다립니다.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = RoomResponse.class))),
             @ApiResponse(
                     description = "<p>[2501] 서버 내부 오류로 인해 thread sleep이 중단된 경우" +
-                            "<p>[2502] 참가자들 중 일부 인원이 준비되지 않은 경우. 주로 \"게임 시작 여부 확인\" API를 호출하지 않을 경우에 발생",
-                    responseCode = "500",
-                    content = @Content
+                            "<p>[2502] 게임 준비 API 호출 후 15초 동안 참가자 전원의 준비가 되지 않은 경우",
+                    responseCode = "500", content = @Content
             )
     })
-    @PatchMapping("/{roomId}/start")
-    public RoomResponse gameStart(
+    @PatchMapping("/{roomId}/ready")
+    public RoomResponse ready(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
                     example = "1"
             ) @PathVariable Integer roomId
     ) {
-        RoomDto roomDto = roomService.gameStart(userPrincipal.getMemberId(), roomId);
+        RoomDto roomDto = roomService.ready(userPrincipal.getMemberId(), roomId);
 
         try {
-            gameSyncService.syncUntilDeliveredToEveryone(roomId);
+            gameSyncService.waitUntilEveryoneIsReady(roomId);
         } catch (Exception ex) {
             roomService.init(roomId);
             throw ex;

@@ -23,21 +23,23 @@ public class GameSyncService {
     private final PlayerService playerService;
     private final EntityManager entityManager;
 
-    public void syncUntilDeliveredToEveryone(Integer roomId) {
+    public void waitUntilEveryoneIsReady(Integer roomId) {
         Room room = roomService.findEntityById(roomId);
 
         int count = 0;
         try {
-            while (!checkDeliveredToEveryone(room)) {
-                if (count++ >= 25) throw new EveryoneNotReadyException();
-                Thread.sleep(400);
+            while (!checkEveryoneIsReady(room)) {
+                if (++count > 30) {
+                    throw new EveryoneNotReadyException();
+                }
+                Thread.sleep(500);
             }
         } catch (InterruptedException ex) {
             throw new GameStartException(ex);
         }
     }
 
-    private boolean checkDeliveredToEveryone(Room room) {
+    private boolean checkEveryoneIsReady(Room room) {
         entityManager.clear();
         List<Player> players = playerService.findAllEntityByRoom(room);
         return players.stream().allMatch(Player::getIsReady);
