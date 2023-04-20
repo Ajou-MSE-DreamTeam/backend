@@ -96,13 +96,12 @@ public class RoomController {
     @GetMapping("/{roomId}/start")
 
     public GameStartResponse checkGameStarted(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
                     example = "1"
             ) @PathVariable Integer roomId
     ) {
-        boolean isStarted = roomService.checkGameStarted(userPrincipal.getMemberId(), roomId);
+        boolean isStarted = roomService.checkGameStarted(roomId);
         return GameStartResponse.of(isStarted);
     }
 

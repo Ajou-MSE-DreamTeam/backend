@@ -57,16 +57,9 @@ public class RoomService {
     }
 
     @Transactional
-    public boolean checkGameStarted(Integer loginMemberId, Integer roomId) {
+    public boolean checkGameStarted(Integer roomId) {
         Room room = this.findEntityById(roomId);
-
-        if (room.getStatus() != RoomStatus.READY) {
-            Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
-            player.setReady();
-            return true;
-        }
-
-        return false;
+        return room.getStatus() != RoomStatus.READY;
     }
 
     @Transactional
