@@ -97,7 +97,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse(
                         ExceptionType.UNHANDLED.getCode(),
-                        ExceptionType.UNHANDLED.getMessage()
+                        ExceptionType.UNHANDLED.getMessage() + " " + ex.getMessage()
                 ));
     }
 }
