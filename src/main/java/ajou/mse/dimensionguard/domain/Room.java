@@ -19,6 +19,7 @@ public class Room extends BaseEntity {
     private Integer id;
 
     @Setter(AccessLevel.PRIVATE)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
