@@ -13,14 +13,14 @@ public class MemberDto {
     private Integer id;
     private String accountId;
     private String password;
-    private String nickname;
+    private String name;
 
-    public static MemberDto of(String accountId, String password, String nickname) {
-        return new MemberDto(null, accountId, password, nickname);
+    public static MemberDto of(String accountId, String password, String name) {
+        return new MemberDto(null, accountId, password, name);
     }
 
-    public static MemberDto of(Integer id, String accountId, String password, String nickname) {
-        return new MemberDto(id, accountId, password, nickname);
+    public static MemberDto of(Integer id, String accountId, String password, String name) {
+        return new MemberDto(id, accountId, password, name);
     }
 
     public static MemberDto from(Member entity) {
@@ -28,7 +28,7 @@ public class MemberDto {
                 entity.getId(),
                 entity.getAccountId(),
                 entity.getPassword(),
-                entity.getNickname()
+                entity.getName()
         );
     }
 
@@ -36,7 +36,7 @@ public class MemberDto {
         return Member.of(
                 this.getAccountId(),
                 passwordEncoder.encode(this.getPassword()),
-                this.getNickname()
+                this.getName()
         );
     }
 }
