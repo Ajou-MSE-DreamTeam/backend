@@ -11,6 +11,7 @@ import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.exception.member.MemberNameDuplicateException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
+import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberIdException;
 import ajou.mse.dimensionguard.exception.room.AlreadyParticipatingException;
 import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
 import ajou.mse.dimensionguard.exception.room.GameStartException;
@@ -116,7 +117,9 @@ public enum ExceptionType {
     /**
      * 플레이어({@link Player}) 관련 예외
      */
-    PLAYER_NOT_FOUND_BY_MEMBER_AND_ROOM(3000, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberAndRoomException.class);
+    PLAYER_NOT_FOUND_BY_MEMBER_AND_ROOM(3000, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberAndRoomException.class),
+    PLAYER_NOT_FOUND_BY_MEMBER(3001, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberIdException.class),
+    ;
 
     private final Integer code;
     private final String message;
