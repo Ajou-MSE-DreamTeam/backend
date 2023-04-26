@@ -9,6 +9,7 @@ import ajou.mse.dimensionguard.exception.auth.PasswordNotValidException;
 import ajou.mse.dimensionguard.exception.auth.TokenValidateException;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
+import ajou.mse.dimensionguard.exception.member.NicknameDuplicateException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
 import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
 import ajou.mse.dimensionguard.exception.room.GameStartException;
@@ -101,6 +102,7 @@ public enum ExceptionType {
      */
     ACCOUNT_ID_DUPLICATE(2000, "이미 사용중인 id입니다.", AccountIdDuplicateException.class),
     MEMBER_ID_NOT_FOUND(2001, "일치하는 회원을 찾을 수 없습니다.", MemberIdNotFoundException.class),
+    NICKNAME_DUPLICATE(2002, "이미 사용중인 닉네임입니다.", NicknameDuplicateException.class),
 
     /**
      * 게임 룸({@link Room}) 관련 예외

@@ -31,7 +31,9 @@ public class MemberController {
     )
     @ApiResponses({
             @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = MemberResponse.class))),
-            @ApiResponse(description = "[2000] 이미 사용중인 계정 id인 경우", responseCode = "409", content = @Content)
+            @ApiResponse(description = "<li>[2000] 전달받은 id가 이미 사용중인 계정 id인 경우" +
+                    "<li>[2002] 전달받은 닉네임이 이미 사용중인 닉네임인 경우",
+                    responseCode = "409", content = @Content)
     })
     @PostMapping
     public ResponseEntity<MemberResponse> signUp(@RequestBody SignUpRequest request) {
