@@ -8,6 +8,7 @@ import ajou.mse.dimensionguard.domain.player.Hero;
 import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.CheckGameStartResponse;
+import ajou.mse.dimensionguard.exception.room.AlreadyParticipatingException;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
 import ajou.mse.dimensionguard.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,6 +29,8 @@ public class RoomService {
 
     @Transactional
     public RoomDto createRoom(Integer loginMemberId) {
+        validateAlreadyParticipating(loginMemberId);
+
         Room room = roomRepository.save(Room.of());
         Member host = memberService.findEntityById(loginMemberId);
 
@@ -38,6 +42,8 @@ public class RoomService {
 
     @Transactional
     public RoomDto join(Integer loginMemberId, Integer roomId) {
+        validateAlreadyParticipating(loginMemberId);
+
         Room room = this.findEntityById(roomId);
         Member member = memberService.findEntityById(loginMemberId);
 
@@ -98,6 +104,13 @@ public class RoomService {
         } else {
             Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
             playerService.delete(player);
+        }
+    }
+
+    private void validateAlreadyParticipating(Integer loginMemberId) {
+        Optional<Player> optionalPlayer = playerService.findOptEntityByMemberId(loginMemberId);
+        if (optionalPlayer.isPresent()) {
+            throw new AlreadyParticipatingException(optionalPlayer.get().getRoom().getId());
         }
     }
 }
