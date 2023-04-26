@@ -17,7 +17,14 @@ public class SignUpRequest {
     @NotEmpty
     private String password;
 
+    @Schema(description = "닉네임", example = "홍길동")
+    private String nickname;
+
     public MemberDto toDto() {
-        return MemberDto.of(this.getId(), this.getPassword());
+        return MemberDto.of(
+                this.getId(),
+                this.getPassword(),
+                this.getNickname()
+        );
     }
 }
