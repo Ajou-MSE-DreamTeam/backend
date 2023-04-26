@@ -48,6 +48,6 @@ public class MemberController {
     )
     @GetMapping("/id/existence")
     public AccountIdExistenceResponse checkAccountIdExistence(@RequestParam String id) {
-        return AccountIdExistenceResponse.of(memberService.existsByAccountId(id));
+        return new AccountIdExistenceResponse(memberService.existsByAccountId(id));
     }
 }
