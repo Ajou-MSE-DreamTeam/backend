@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,9 +17,13 @@ public class RoomDto {
     private Integer id;
     private RoomStatus status;
     private List<PlayerDto> playerDtos;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Integer createdBy;
+    private Integer updatedBy;
 
-    public static RoomDto of(Integer id, RoomStatus status, List<PlayerDto> playerDtos) {
-        return new RoomDto(id, status, playerDtos);
+    public static RoomDto of(Integer id, RoomStatus status, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+        return new RoomDto(id, status, playerDtos, createdAt, updatedAt, createdBy, updatedBy);
     }
 
     public static RoomDto from(Room room) {
@@ -27,7 +32,11 @@ public class RoomDto {
                 room.getStatus(),
                 room.getPlayers().stream()
                         .map(PlayerDto::from)
-                        .toList()
+                        .toList(),
+                room.getCreatedAt(),
+                room.getUpdatedAt(),
+                room.getCreatedBy(),
+                room.getUpdatedBy()
         );
     }
 }

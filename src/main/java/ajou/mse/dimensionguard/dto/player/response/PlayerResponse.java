@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class PlayerResponse {
 
@@ -39,12 +39,8 @@ public class PlayerResponse {
     @Schema(description = "현재 취하고 있는 모션", example = "2")
     private Integer motion;
 
-    public static PlayerResponse of(Integer id, MemberResponse memberDto, Integer roomId, Boolean isBoss, Integer hp, Integer energy, Position position, Integer damageDealt, Integer motion) {
-        return new PlayerResponse(id, memberDto, roomId, isBoss, hp, energy, position, damageDealt, motion);
-    }
-
     public static PlayerResponse from(PlayerDto dto) {
-        return of(
+        return new PlayerResponse(
                 dto.getId(),
                 MemberResponse.from(dto.getMemberDto()),
                 dto.getRoomId(),

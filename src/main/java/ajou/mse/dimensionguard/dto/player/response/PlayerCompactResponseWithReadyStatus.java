@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class PlayerCompactResponse {
+public class PlayerCompactResponseWithReadyStatus {
 
     @Schema(description = "PK of player", example = "3")
     private Integer id;
@@ -21,12 +21,16 @@ public class PlayerCompactResponse {
     @Schema(description = "보스 여부", example = "false")
     private Boolean isBoss;
 
-    public static PlayerCompactResponse from(PlayerDto dto) {
-        return new PlayerCompactResponse(
+    @Schema(description = "준비 여부", example = "false")
+    private Boolean isReady;
+
+    public static PlayerCompactResponseWithReadyStatus from(PlayerDto dto) {
+        return new PlayerCompactResponseWithReadyStatus(
                 dto.getId(),
                 dto.getMemberDto().getId(),
                 dto.getMemberDto().getNickname(),
-                dto.getIsBoss()
+                dto.getIsBoss(),
+                dto.getIsReady()
         );
     }
 }

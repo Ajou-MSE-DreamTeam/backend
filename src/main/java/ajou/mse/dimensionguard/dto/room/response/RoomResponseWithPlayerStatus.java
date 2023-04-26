@@ -1,7 +1,7 @@
 package ajou.mse.dimensionguard.dto.room.response;
 
 import ajou.mse.dimensionguard.constant.room.RoomStatus;
-import ajou.mse.dimensionguard.dto.player.response.PlayerCompactResponse;
+import ajou.mse.dimensionguard.dto.player.response.PlayerCompactResponseWithReadyStatus;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -11,22 +11,21 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class RoomResponse {
-
+public class RoomResponseWithPlayerStatus {
 
     @Schema(description = "PK of room", example = "1")
     private Integer id;
 
     private RoomStatus status;
 
-    private List<PlayerCompactResponse> players;
+    private List<PlayerCompactResponseWithReadyStatus> players;
 
-    public static RoomResponse from(RoomDto dto) {
-        return new RoomResponse(
+    public static RoomResponseWithPlayerStatus from(RoomDto dto) {
+        return new RoomResponseWithPlayerStatus(
                 dto.getId(),
                 dto.getStatus(),
                 dto.getPlayerDtos().stream()
-                        .map(PlayerCompactResponse::from)
+                        .map(PlayerCompactResponseWithReadyStatus::from)
                         .toList()
         );
     }

@@ -1,13 +1,12 @@
 package ajou.mse.dimensionguard.controller;
 
+import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
-import ajou.mse.dimensionguard.dto.room.response.GameStartResponse;
-import ajou.mse.dimensionguard.dto.room.response.RoomCompactResponse;
-import ajou.mse.dimensionguard.dto.room.response.RoomResponse;
-import ajou.mse.dimensionguard.dto.room.response.WaitingRoomListResponse;
+import ajou.mse.dimensionguard.dto.room.response.*;
 import ajou.mse.dimensionguard.gameService.GameSyncService;
 import ajou.mse.dimensionguard.security.UserPrincipal;
+import ajou.mse.dimensionguard.service.MemberService;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +30,7 @@ import java.util.List;
 @RestController
 public class RoomController {
 
+    private final MemberService memberService;
     private final RoomService roomService;
     private final GameSyncService gameSyncService;
 
@@ -41,14 +41,14 @@ public class RoomController {
             security = @SecurityRequirement(name = "access-token")
     )
     @PostMapping
-    public ResponseEntity<RoomResponse> create(
+    public ResponseEntity<RoomResponseWithPlayerStatus> create(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal
     ) {
         RoomDto roomDto = roomService.createRoom(userPrincipal.getMemberId());
 
         return ResponseEntity
                 .created(URI.create("/api/rooms/" + roomDto.getId()))
-                .body(RoomResponse.from(roomDto));
+                .body(RoomResponseWithPlayerStatus.from(roomDto));
     }
 
     @Operation(
@@ -58,7 +58,7 @@ public class RoomController {
             security = @SecurityRequirement(name = "access-token")
     )
     @PostMapping("/{roomId}/join")
-    public ResponseEntity<RoomResponse> join(
+    public ResponseEntity<RoomResponseWithPlayerStatus> join(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
@@ -70,7 +70,7 @@ public class RoomController {
 
         return ResponseEntity
                 .created(URI.create("/api/players/" + players.get(players.size() - 1).getId()))
-                .body(RoomResponse.from(roomDto));
+                .body(RoomResponseWithPlayerStatus.from(roomDto));
     }
 
     @Operation(
@@ -80,11 +80,12 @@ public class RoomController {
     )
     @GetMapping
     public WaitingRoomListResponse searchWaitingRoom() {
-        return WaitingRoomListResponse.of(
-                roomService.findAllByStatusReady().stream()
-                        .map(RoomCompactResponse::from)
-                        .toList()
-        );
+        List<RoomCompactResponse> roomList = roomService.findAllByStatusReady().stream()
+                .map(roomDto -> {
+                    MemberDto host = memberService.findDtoById(roomDto.getCreatedBy());
+                    return RoomCompactResponse.from(roomDto, host.getNickname());
+                }).toList();
+        return new WaitingRoomListResponse(roomList);
     }
 
     @Operation(
@@ -95,14 +96,13 @@ public class RoomController {
     )
     @GetMapping("/{roomId}/start")
 
-    public GameStartResponse checkGameStarted(
+    public CheckGameStartResponse checkGameStarted(
             @Parameter(
                     description = "PK of room",
                     example = "1"
             ) @PathVariable Integer roomId
     ) {
-        boolean isStarted = roomService.checkGameStarted(roomId);
-        return GameStartResponse.of(isStarted);
+        return roomService.checkGameStarted(roomId);
     }
 
     @Operation(
