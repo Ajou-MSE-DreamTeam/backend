@@ -51,7 +51,7 @@ public class RoomService {
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
-    public RoomDto findDtoById(Integer roomId) {
+    private RoomDto findDtoById(Integer roomId) {
         return RoomDto.from(findEntityById(roomId));
     }
 
@@ -85,5 +85,19 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
         room.init();
         room.getPlayers().forEach(Player::setNotReady);
+    }
+
+    @Transactional
+    public void exit(Integer loginMemberId, Integer roomId) {
+        Room room = this.findEntityById(roomId);
+
+        // 방을 나가려는 유저가 방의 호스트라면 방을 해산한다.
+        if (room.getCreatedBy().equals(loginMemberId)) {
+            playerService.deleteAll(room.getPlayers());
+            roomRepository.delete(room);
+        } else {
+            Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
+            playerService.delete(player);
+        }
     }
 }
