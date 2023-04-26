@@ -8,7 +8,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class PlayerDto {
 
@@ -16,14 +16,15 @@ public class PlayerDto {
     private MemberDto memberDto;
     private Integer roomId;
     private Boolean isBoss;
+    private Boolean isReady;
     private Integer hp;
     private Integer energy;
     private Position position;
     private Integer damageDealt;
     private Integer motion;
 
-    public static PlayerDto of(Integer id, MemberDto memberDto, Integer roomId, Boolean isBoss, Integer hp, Integer energy, Position position, Integer damageDealt, Integer motion) {
-        return new PlayerDto(id, memberDto, roomId, isBoss, hp, energy, position, damageDealt, motion);
+    public static PlayerDto of(Integer id, MemberDto memberDto, Integer roomId, Boolean isBoss, Boolean isReady, Integer hp, Integer energy, Position position, Integer damageDealt, Integer motion) {
+        return new PlayerDto(id, memberDto, roomId, isBoss, isReady, hp, energy, position, damageDealt, motion);
     }
 
     public static PlayerDto from(Player entity) {
@@ -39,6 +40,7 @@ public class PlayerDto {
                 MemberDto.from(entity.getMember()),
                 entity.getRoom().getId(),
                 isBoss,
+                entity.getIsReady(),
                 entity.getHp(),
                 entity.getEnergy(),
                 hero == null ? null : hero.getPos(),

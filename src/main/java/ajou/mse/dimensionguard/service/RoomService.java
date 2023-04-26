@@ -7,6 +7,7 @@ import ajou.mse.dimensionguard.domain.player.Boss;
 import ajou.mse.dimensionguard.domain.player.Hero;
 import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
+import ajou.mse.dimensionguard.dto.room.response.CheckGameStartResponse;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
 import ajou.mse.dimensionguard.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,10 @@ public class RoomService {
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
+    public RoomDto findDtoById(Integer roomId) {
+        return RoomDto.from(findEntityById(roomId));
+    }
+
     public List<RoomDto> findAllByStatusReady() {
         return roomRepository.findAllByStatus(RoomStatus.READY).stream()
                 .map(RoomDto::from)
@@ -57,9 +62,9 @@ public class RoomService {
     }
 
     @Transactional
-    public boolean checkGameStarted(Integer roomId) {
-        Room room = this.findEntityById(roomId);
-        return room.getStatus() != RoomStatus.READY;
+    public CheckGameStartResponse checkGameStarted(Integer roomId) {
+        RoomDto roomDto = this.findDtoById(roomId);
+        return CheckGameStartResponse.from(roomDto);
     }
 
     @Transactional
