@@ -93,20 +93,6 @@ public class RoomService {
         room.getPlayers().forEach(Player::setNotReady);
     }
 
-    @Transactional
-    public void exit(Integer loginMemberId, Integer roomId) {
-        Room room = this.findEntityById(roomId);
-
-        // 방을 나가려는 유저가 방의 호스트라면 방을 해산한다.
-        if (room.getCreatedBy().equals(loginMemberId)) {
-            playerService.deleteAll(room.getPlayers());
-            roomRepository.delete(room);
-        } else {
-            Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
-            playerService.delete(player);
-        }
-    }
-
     private void validateAlreadyParticipating(Integer loginMemberId) {
         Optional<Player> optionalPlayer = playerService.findOptEntityByMemberId(loginMemberId);
         if (optionalPlayer.isPresent()) {

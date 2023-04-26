@@ -152,21 +152,4 @@ public class RoomController {
 
         return RoomResponse.from(roomDto);
     }
-
-    @Operation(
-            summary = "방 나가기",
-            description = "<p>참여중인 게임 방에서 나갑니다." +
-                    "<p>방을 나가려는 유저가 방의 호스트라면 방 자체를 해산(삭제)합니다.",
-            security = @SecurityRequirement(name = "access-token")
-    )
-    @DeleteMapping("/{roomId}")
-    public void exit(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @Parameter(
-                    description = "PK of room",
-                    example = "1"
-            ) @PathVariable Integer roomId
-    ) {
-        roomService.exit(userPrincipal.getMemberId(), roomId);
-    }
 }
