@@ -1,10 +1,12 @@
 package ajou.mse.dimensionguard.controller;
 
+import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.*;
 import ajou.mse.dimensionguard.gameService.GameSyncService;
 import ajou.mse.dimensionguard.security.UserPrincipal;
+import ajou.mse.dimensionguard.service.MemberService;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,6 +30,7 @@ import java.util.List;
 @RestController
 public class RoomController {
 
+    private final MemberService memberService;
     private final RoomService roomService;
     private final GameSyncService gameSyncService;
 
@@ -77,11 +80,12 @@ public class RoomController {
     )
     @GetMapping
     public WaitingRoomListResponse searchWaitingRoom() {
-        return WaitingRoomListResponse.of(
-                roomService.findAllByStatusReady().stream()
-                        .map(RoomCompactResponse::from)
-                        .toList()
-        );
+        List<RoomCompactResponse> roomList = roomService.findAllByStatusReady().stream()
+                .map(roomDto -> {
+                    MemberDto host = memberService.findDtoById(roomDto.getCreatedBy());
+                    return RoomCompactResponse.from(roomDto, host.getNickname());
+                }).toList();
+        return new WaitingRoomListResponse(roomList);
     }
 
     @Operation(
