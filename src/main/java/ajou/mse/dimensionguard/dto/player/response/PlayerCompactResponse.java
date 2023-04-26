@@ -2,11 +2,10 @@ package ajou.mse.dimensionguard.dto.player.response;
 
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class PlayerCompactResponse {
 
@@ -19,12 +18,8 @@ public class PlayerCompactResponse {
     @Schema(description = "보스 여부", example = "false")
     private Boolean isBoss;
 
-    public static PlayerCompactResponse of(Integer id, Integer memberId, Boolean isBoss) {
-        return new PlayerCompactResponse(id, memberId, isBoss);
-    }
-
     public static PlayerCompactResponse from(PlayerDto dto) {
-        return of(
+        return new PlayerCompactResponse(
                 dto.getId(),
                 dto.getMemberDto().getId(),
                 dto.getIsBoss()
