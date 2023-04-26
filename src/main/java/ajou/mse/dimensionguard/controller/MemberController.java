@@ -2,7 +2,7 @@ package ajou.mse.dimensionguard.controller;
 
 import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
-import ajou.mse.dimensionguard.dto.member.response.AccountIdExistenceResponse;
+import ajou.mse.dimensionguard.dto.member.response.ExistenceResponse;
 import ajou.mse.dimensionguard.dto.member.response.MemberResponse;
 import ajou.mse.dimensionguard.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,7 +49,17 @@ public class MemberController {
                     "<p>사용중인 id라면 <code>true</code>를, 사용중이지 않은 id라면 <code>false</code>를 반환합니다."
     )
     @GetMapping("/id/existence")
-    public AccountIdExistenceResponse checkAccountIdExistence(@RequestParam String id) {
-        return new AccountIdExistenceResponse(memberService.existsByAccountId(id));
+    public ExistenceResponse checkAccountIdExistence(@RequestParam String id) {
+        return new ExistenceResponse(memberService.existsByAccountId(id));
+    }
+
+    @Operation(
+            summary = "닉네임 중복 여부 확인",
+            description = "<p>이미 사용중인 닉네임인지 확인합니다." +
+                    "<p>사용중인 닉네임이라면 <code>true</code>를, 사용중이지 않은 닉네임이라면 <code>false</code>를 반환합니다."
+    )
+    @GetMapping("/nickname/existence")
+    public ExistenceResponse checkNicknameExistence(@RequestParam String nickname) {
+        return new ExistenceResponse(memberService.existsByNickname(nickname));
     }
 }

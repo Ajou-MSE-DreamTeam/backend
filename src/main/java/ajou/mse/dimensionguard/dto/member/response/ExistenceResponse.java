@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class AccountIdExistenceResponse {
+public class ExistenceResponse {
 
     private Boolean isExist;
 }

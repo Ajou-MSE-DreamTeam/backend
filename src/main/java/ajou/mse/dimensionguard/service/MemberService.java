@@ -50,6 +50,10 @@ public class MemberService {
         return memberRepository.existsByAccountId(accountId);
     }
 
+    public boolean existsByNickname(String nickname) {
+        return memberRepository.existsByNickname(nickname);
+    }
+
     private void validateDuplicatedAccountId(String accountId) {
         if (memberRepository.existsByAccountId(accountId)) {
             throw new AccountIdDuplicateException();
