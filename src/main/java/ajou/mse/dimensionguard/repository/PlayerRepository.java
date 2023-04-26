@@ -11,6 +11,9 @@ import java.util.Optional;
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     @EntityGraph(attributePaths = {"member", "room"})
+    Optional<Player> findByMember_Id(Integer memberId);
+
+    @EntityGraph(attributePaths = {"member", "room"})
     Optional<Player> findByMember_IdAndRoom_Id(Integer memberId, Integer roomId);
 
     @EntityGraph(attributePaths = {"member", "room"})

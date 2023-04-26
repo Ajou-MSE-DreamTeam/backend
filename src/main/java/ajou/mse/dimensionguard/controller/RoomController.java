@@ -40,6 +40,10 @@ public class RoomController {
                     "<p>생성한 호스트는 boss player가 됩니다.",
             security = @SecurityRequirement(name = "access-token")
     )
+    @ApiResponses({
+            @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = RoomResponseWithPlayerStatus.class))),
+            @ApiResponse(description = "[2503] 이미 다른 방에 참여중이므로 참여중인 방에서 나간 후 재시도가 필요한 경우", responseCode = "409", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<RoomResponseWithPlayerStatus> create(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal
@@ -57,6 +61,10 @@ public class RoomController {
                     "<p>참가한 플레이어는 hero player가 됩니다.",
             security = @SecurityRequirement(name = "access-token")
     )
+    @ApiResponses({
+            @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = RoomResponseWithPlayerStatus.class))),
+            @ApiResponse(description = "[2503] 이미 다른 방에 참여중이므로 참여중인 방에서 나간 후 재시도가 필요한 경우", responseCode = "409", content = @Content)
+    })
     @PostMapping("/{roomId}/join")
     public ResponseEntity<RoomResponseWithPlayerStatus> join(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
