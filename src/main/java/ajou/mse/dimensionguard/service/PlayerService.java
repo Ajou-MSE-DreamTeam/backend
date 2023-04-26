@@ -31,7 +31,13 @@ public class PlayerService {
         return playerRepository.findAllByRoom(room);
     }
 
-    public void repositoryFlush() {
-        playerRepository.flush();
+    @Transactional
+    public void delete(Player player) {
+        playerRepository.delete(player);
+    }
+
+    @Transactional
+    public void deleteAll(Iterable<? extends Player> players) {
+        playerRepository.deleteAll(players);
     }
 }

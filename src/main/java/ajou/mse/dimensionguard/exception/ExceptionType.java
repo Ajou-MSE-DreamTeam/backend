@@ -107,7 +107,7 @@ public enum ExceptionType {
     /**
      * 게임 룸({@link Room}) 관련 예외
      */
-    ROOM_ID_NOT_FOUND(2500, "게임 룸을 찾을 수 없습니다.", RoomIdNotFoundException.class),
+    ROOM_ID_NOT_FOUND(2500, "게임 방을 찾을 수 없습니다. 해산되거나 게임이 시작된 방일 수 있습니다.", RoomIdNotFoundException.class),
     GAME_START(2501, "알 수 없는 이유로 게임을 시작할 수 없습니다.", GameStartException.class),
     EVERYONE_NOT_READY(2502, "참가자들의 준비를 기다렸으나, 참가자 전원의 준비가 되지 않았습니다.", EveryoneNotReadyException.class),
 

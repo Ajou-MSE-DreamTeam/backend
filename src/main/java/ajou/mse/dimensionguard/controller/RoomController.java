@@ -94,6 +94,10 @@ public class RoomController {
                     "<p>게임이 진행중이거나 종료된 경우에는 <code>true</code>를, 게임이 아직 시작되지 않은 상태라면 <code>false</code>를 응답합니다.",
             security = @SecurityRequirement(name = "access-token")
     )
+    @ApiResponses({
+            @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = CheckGameStartResponse.class))),
+            @ApiResponse(description = "[2500] 호스트(방장)이 방을 나가 방이 해산되는 등의 이유로 방을 찾을 수 없는 경우.", responseCode = "404", content = @Content)
+    })
     @GetMapping("/{roomId}/start")
 
     public CheckGameStartResponse checkGameStarted(
@@ -139,5 +143,22 @@ public class RoomController {
         }
 
         return RoomResponse.from(roomDto);
+    }
+
+    @Operation(
+            summary = "방 나가기",
+            description = "<p>참여중인 게임 방에서 나갑니다." +
+                    "<p>방을 나가려는 유저가 방의 호스트라면 방 자체를 해산(삭제)합니다.",
+            security = @SecurityRequirement(name = "access-token")
+    )
+    @DeleteMapping("/{roomId}")
+    public void exit(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @Parameter(
+                    description = "PK of room",
+                    example = "1"
+            ) @PathVariable Integer roomId
+    ) {
+        roomService.exit(userPrincipal.getMemberId(), roomId);
     }
 }
