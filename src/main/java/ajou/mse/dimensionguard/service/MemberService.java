@@ -5,7 +5,7 @@ import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
-import ajou.mse.dimensionguard.exception.member.NicknameDuplicateException;
+import ajou.mse.dimensionguard.exception.member.MemberNameDuplicateException;
 import ajou.mse.dimensionguard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +25,7 @@ public class MemberService {
     @Transactional
     public MemberDto save(SignUpRequest request) {
         validateDuplicatedAccountId(request.getId());
-        validateDuplicatedNickname(request.getNickname());
+        validateDuplicatedMemberName(request.getName());
 
         MemberDto memberDto = request.toDto();
         Member savedMember = memberRepository.save(memberDto.toEntity(passwordEncoder));
@@ -50,8 +50,8 @@ public class MemberService {
         return memberRepository.existsByAccountId(accountId);
     }
 
-    public boolean existsByNickname(String nickname) {
-        return memberRepository.existsByNickname(nickname);
+    public boolean existsByName(String name) {
+        return memberRepository.existsByName(name);
     }
 
     private void validateDuplicatedAccountId(String accountId) {
@@ -60,9 +60,9 @@ public class MemberService {
         }
     }
 
-    private void validateDuplicatedNickname(String nickname) {
-        if (memberRepository.existsByNickname(nickname)) {
-            throw new NicknameDuplicateException(nickname);
+    private void validateDuplicatedMemberName(String name) {
+        if (memberRepository.existsByName(name)) {
+            throw new MemberNameDuplicateException(name);
         }
     }
 }

@@ -58,8 +58,8 @@ public class MemberController {
             description = "<p>이미 사용중인 닉네임인지 확인합니다." +
                     "<p>사용중인 닉네임이라면 <code>true</code>를, 사용중이지 않은 닉네임이라면 <code>false</code>를 반환합니다."
     )
-    @GetMapping("/nickname/existence")
-    public ExistenceResponse checkNicknameExistence(@RequestParam String nickname) {
-        return new ExistenceResponse(memberService.existsByNickname(nickname));
+    @GetMapping("/name/existence")
+    public ExistenceResponse checkMemberNameExistence(@RequestParam String name) {
+        return new ExistenceResponse(memberService.existsByName(name));
     }
 }

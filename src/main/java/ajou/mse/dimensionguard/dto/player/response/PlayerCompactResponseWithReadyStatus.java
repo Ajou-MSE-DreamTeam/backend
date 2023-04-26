@@ -16,7 +16,7 @@ public class PlayerCompactResponseWithReadyStatus {
     private Integer memberId;
 
     @Schema(description = "닉네임", example = "홍길동")
-    private String nickname;
+    private String name;
 
     @Schema(description = "보스 여부", example = "false")
     private Boolean isBoss;
@@ -28,7 +28,7 @@ public class PlayerCompactResponseWithReadyStatus {
         return new PlayerCompactResponseWithReadyStatus(
                 dto.getId(),
                 dto.getMemberDto().getId(),
-                dto.getMemberDto().getNickname(),
+                dto.getMemberDto().getName(),
                 dto.getIsBoss(),
                 dto.getIsReady()
         );

@@ -16,9 +16,9 @@ public class MemberResponse {
     private String accountId;
 
     @Schema(description = "닉네임", example = "홍길동")
-    private String nickname;
+    private String name;
 
     public static MemberResponse from(MemberDto dto) {
-        return new MemberResponse(dto.getId(), dto.getAccountId(), dto.getNickname());
+        return new MemberResponse(dto.getId(), dto.getAccountId(), dto.getName());
     }
 }

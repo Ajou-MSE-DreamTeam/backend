@@ -83,7 +83,7 @@ public class RoomController {
         List<RoomCompactResponse> roomList = roomService.findAllByStatusReady().stream()
                 .map(roomDto -> {
                     MemberDto host = memberService.findDtoById(roomDto.getCreatedBy());
-                    return RoomCompactResponse.from(roomDto, host.getNickname());
+                    return RoomCompactResponse.from(roomDto, host.getName());
                 }).toList();
         return new WaitingRoomListResponse(roomList);
     }

@@ -18,13 +18,13 @@ public class SignUpRequest {
     private String password;
 
     @Schema(description = "닉네임", example = "홍길동")
-    private String nickname;
+    private String name;
 
     public MemberDto toDto() {
         return MemberDto.of(
                 this.getId(),
                 this.getPassword(),
-                this.getNickname()
+                this.getName()
         );
     }
 }

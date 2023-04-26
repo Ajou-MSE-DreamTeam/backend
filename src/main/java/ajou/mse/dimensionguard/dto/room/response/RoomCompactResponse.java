@@ -16,16 +16,16 @@ public class RoomCompactResponse {
     private RoomStatus status;
 
     @Schema(description = "호스트(방장)의 닉네임", example = "홍길동")
-    private String hostNickname;
+    private String hostName;
 
     @Schema(description = "룸에 참가중인 인원수", example = "3")
     private Integer numOfPlayers;
 
-    public static RoomCompactResponse from(RoomDto dto, String hostNickname) {
+    public static RoomCompactResponse from(RoomDto dto, String hostName) {
         return new RoomCompactResponse(
                 dto.getId(),
                 dto.getStatus(),
-                hostNickname,
+                hostName,
                 dto.getPlayerDtos().size()
         );
     }

@@ -9,7 +9,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     boolean existsByAccountId(String accountId);
 
-    boolean existsByNickname(String nickname);
+    boolean existsByName(String name);
 
     Optional<Member> findByAccountId(String accountId);
 }
