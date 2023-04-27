@@ -1,4 +1,4 @@
-package ajou.mse.dimensionguard.gameService;
+package ajou.mse.dimensionguard.service;
 
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Player;

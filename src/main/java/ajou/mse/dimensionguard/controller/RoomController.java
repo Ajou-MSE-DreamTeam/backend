@@ -4,7 +4,7 @@ import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.*;
-import ajou.mse.dimensionguard.gameService.GameSyncService;
+import ajou.mse.dimensionguard.service.GameSyncService;
 import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.service.MemberService;
 import ajou.mse.dimensionguard.service.RoomService;
