@@ -2,10 +2,7 @@ package ajou.mse.dimensionguard.domain.player;
 
 import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.domain.Room;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
@@ -20,11 +17,14 @@ public class Hero extends Player {
     public static final int HERO_MAX_HP = 10;
     public static final int HERO_MAX_ENERGY = 10;
 
+    @Setter(AccessLevel.PRIVATE)
     @Embedded
     private Position pos;
 
+    @Setter(AccessLevel.PRIVATE)
     private Integer damageDealt;
 
+    @Setter(AccessLevel.PRIVATE)
     private Integer motion;
 
     public static Hero of(Member member, Room room) {
@@ -43,6 +43,13 @@ public class Hero extends Player {
                 .damageDealt(damageDealt)
                 .motion(motion)
                 .build();
+    }
+
+    public void update(Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion) {
+        super.update(hp, energy);
+        this.setPos(pos);
+        this.setDamageDealt(damageDealt);
+        this.setMotion(motion);
     }
 
     @Builder(access = AccessLevel.PRIVATE)

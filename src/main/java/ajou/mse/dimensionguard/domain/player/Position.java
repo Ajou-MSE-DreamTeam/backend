@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -15,8 +16,10 @@ import javax.persistence.Embeddable;
 public class Position {
 
     @Schema(description = "x 좌표", example = "15")
+    @NotNull
     private Integer x;
 
     @Schema(description = "y 좌표", example = "30")
+    @NotNull
     private Integer y;
 }

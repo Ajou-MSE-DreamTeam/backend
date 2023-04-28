@@ -34,9 +34,11 @@ public abstract class Player extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isReady;
 
+    @Setter(AccessLevel.PROTECTED)
     @Column(nullable = false)
     private Integer hp;
 
+    @Setter(AccessLevel.PRIVATE)
     @Column(nullable = false)
     private Integer energy;
 
@@ -46,6 +48,11 @@ public abstract class Player extends BaseTimeEntity {
 
     public void setNotReady() {
         this.setIsReady(false);
+    }
+
+    public void update(Integer hp, Integer energy) {
+        this.setHp(hp);
+        this.setEnergy(energy);
     }
 
     protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {

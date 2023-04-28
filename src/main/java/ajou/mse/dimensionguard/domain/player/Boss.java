@@ -34,6 +34,10 @@ public class Boss extends Player {
                 .build();
     }
 
+    public void decreaseHp(Integer damageDealt) {
+        this.setHp(this.getHp() - damageDealt);
+    }
+
     @Builder(access = AccessLevel.PROTECTED)
     private Boss(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
         super(id, member, room, isReady, hp, energy);

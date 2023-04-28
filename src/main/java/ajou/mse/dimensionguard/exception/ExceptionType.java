@@ -12,10 +12,7 @@ import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.exception.member.MemberNameDuplicateException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberIdException;
-import ajou.mse.dimensionguard.exception.room.AlreadyParticipatingException;
-import ajou.mse.dimensionguard.exception.room.EveryoneNotReadyException;
-import ajou.mse.dimensionguard.exception.room.GameStartException;
-import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
+import ajou.mse.dimensionguard.exception.room.*;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -109,10 +106,11 @@ public enum ExceptionType {
     /**
      * 게임 룸({@link Room}) 관련 예외
      */
-    ROOM_ID_NOT_FOUND(2500, "게임 방을 찾을 수 없습니다. 해산되거나 게임이 시작된 방일 수 있습니다.", RoomIdNotFoundException.class),
+    ROOM_ID_NOT_FOUND(2500, "게임 방을 찾을 수 없습니다. 방이 해산됐거나 게임이 종료되었을 수 있습니다.", RoomIdNotFoundException.class),
     GAME_START(2501, "알 수 없는 이유로 게임을 시작할 수 없습니다.", GameStartException.class),
     EVERYONE_NOT_READY(2502, "참가자들의 준비를 기다렸으나, 참가자 전원의 준비가 되지 않았습니다.", EveryoneNotReadyException.class),
     ALREADY_PARTICIPATING(2503, "이미 다른 방에 참여중입니다. 참여중인 방에서 나간 후 다시 시도해주세요.", AlreadyParticipatingException.class),
+    ROOM_NOT_FOUND_BY_MEMBER_ID(2504, "게임 방을 찾을 수 없습니다. 방이 해산됐거나 게임이 종료되었을 수 있습니다.", RoomNotFoundByMemberIdException.class),
 
     /**
      * 플레이어({@link Player}) 관련 예외

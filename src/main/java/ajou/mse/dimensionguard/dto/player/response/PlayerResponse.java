@@ -4,7 +4,6 @@ import ajou.mse.dimensionguard.domain.player.Position;
 import ajou.mse.dimensionguard.dto.member.response.MemberResponse;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +15,7 @@ public class PlayerResponse {
     private Integer id;
 
     @Schema(description = "회원 정보")
-    private MemberResponse memberDto;
+    private MemberResponse member;
 
     @Schema(description = "참여중인 게임 룸의 PK", example = "2")
     private Integer roomId;
