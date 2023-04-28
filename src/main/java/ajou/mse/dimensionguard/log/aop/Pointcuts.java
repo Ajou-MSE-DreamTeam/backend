@@ -10,6 +10,7 @@ public class Pointcuts {
     @Pointcut("execution(* ajou.mse.dimensionguard.service..*(..))")
     public void servicePoint(){}
 
-    @Pointcut("execution(* ajou.mse.dimensionguard.repository..*(..))")
+    @Pointcut("execution(* ajou.mse.dimensionguard.repository..*(..)) && " +
+            "!execution(* org.springframework.data.repository.CrudRepository.*(..))")
     public void repositoryPoint(){}
 }

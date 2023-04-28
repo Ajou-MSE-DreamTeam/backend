@@ -10,7 +10,8 @@ import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.CheckGameStartResponse;
 import ajou.mse.dimensionguard.exception.room.AlreadyParticipatingException;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
-import ajou.mse.dimensionguard.repository.RoomRepository;
+import ajou.mse.dimensionguard.exception.room.RoomNotFoundByMemberIdException;
+import ajou.mse.dimensionguard.repository.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +58,12 @@ public class RoomService {
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
-    private RoomDto findDtoById(Integer roomId) {
+    public Room findEntityByMemberId(Integer memberId) {
+        return roomRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new RoomNotFoundByMemberIdException(memberId));
+    }
+
+    public RoomDto findDtoById(Integer roomId) {
         return RoomDto.from(findEntityById(roomId));
     }
 
