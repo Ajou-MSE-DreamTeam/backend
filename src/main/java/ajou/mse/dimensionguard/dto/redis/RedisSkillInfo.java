@@ -1,5 +1,6 @@
 package ajou.mse.dimensionguard.dto.redis;
 
+import ajou.mse.dimensionguard.domain.player.Position;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,21 +13,24 @@ import static ajou.mse.dimensionguard.constant.ConstantUtil.SKILL_INFO_TIMEOUT;
 
 @Getter
 @RedisHash(value = "skill", timeToLive = SKILL_INFO_TIMEOUT)
-public class SkillInfo {
+public class RedisSkillInfo {
 
     @Id
     private Integer roomId;
 
-    private Integer skillId;
+    private Integer num;
+
+    private Position pos;
 
     @Setter(AccessLevel.PRIVATE)
     private Integer deliveredCount;
 
     private LocalDateTime createdAt;
 
-    public SkillInfo(Integer roomId, Integer skillId) {
+    public RedisSkillInfo(Integer roomId, Integer num, Position pos) {
         this.roomId = roomId;
-        this.skillId = skillId;
+        this.num = num;
+        this.pos = pos;
         this.deliveredCount = 0;
         this.createdAt = LocalDateTime.now();
     }

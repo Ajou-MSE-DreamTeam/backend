@@ -1,7 +1,7 @@
 package ajou.mse.dimensionguard.constant;
 
 import ajou.mse.dimensionguard.dto.redis.InGameRequestStatus;
-import ajou.mse.dimensionguard.dto.redis.SkillInfo;
+import ajou.mse.dimensionguard.dto.redis.RedisSkillInfo;
 import ajou.mse.dimensionguard.service.GameSyncService;
 
 public class ConstantUtil {
@@ -22,7 +22,7 @@ public class ConstantUtil {
 
     /**
      * <p>Redis time to live
-     * <p>{@link InGameRequestStatus}, {@link SkillInfo}
+     * <p>{@link InGameRequestStatus}, {@link RedisSkillInfo}
      */
     public static final int IN_GAME_REQUEST_STATUS_TIMEOUT = 2;
     public static final int SKILL_INFO_TIMEOUT = 2;
