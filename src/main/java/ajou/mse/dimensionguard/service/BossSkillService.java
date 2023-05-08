@@ -27,11 +27,9 @@ public class BossSkillService {
         Optional<RedisSkillInfo> optionalSkillInfo = redisSkillInfoRepository.findById(roomId);
 
         if (optionalSkillInfo.isEmpty()) {
-            System.out.println(11111);
             return null;
         }
 
-        System.out.println(22222);
         RedisSkillInfo redisSkillInfo = optionalSkillInfo.get();
         redisSkillInfo.increaseDeliveredCount();
         redisSkillInfoRepository.save(redisSkillInfo);

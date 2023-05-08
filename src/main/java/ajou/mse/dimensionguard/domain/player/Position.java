@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Position {
 
-    @Schema(description = "x 좌표", example = "15")
+    @Schema(description = "x 좌표", example = "15.22")
     @NotNull
-    private Integer x;
+    private Double x;
 
-    @Schema(description = "y 좌표", example = "30")
+    @Schema(description = "y 좌표", example = "30.5")
     @NotNull
-    private Integer y;
+    private Double y;
 }
