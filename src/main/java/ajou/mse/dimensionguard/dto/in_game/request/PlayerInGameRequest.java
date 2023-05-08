@@ -38,7 +38,6 @@ public class PlayerInGameRequest {
 
     // For boss
     @Schema(description = "<p>사용한 스킬 (for boss)." +
-            "<p>해당하지 않는 경우(hero인 경우) <code>null</code>로 전달해도 된다.",
-            example = "")
-    private Integer skillUsed;
+            "<p>해당하지 않는 경우(hero인 경우) <code>null</code>로 전달해도 된다.")
+    private SkillDto skillUsed;
 }
