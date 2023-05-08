@@ -29,8 +29,8 @@ public class PlayerResponse {
     @Schema(description = "에너지", example = "100")
     private Integer energy;
 
-    @Schema(description = "좌표정보")
-    private Position position;
+    @Schema(description = "좌표 정보")
+    private Position pos;
 
     @Schema(description = "가한 데미지", example = "5")
     private Integer damageDealt;
