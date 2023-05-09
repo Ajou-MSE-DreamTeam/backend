@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_MAX_ENERGY;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_MAX_HP;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorValue("boss")
 @Entity
 public class Boss extends Player {
-
-    public static final int BOSS_MAX_HP = 100;
-    public static final int BOSS_MAX_ENERGY = 100;
 
     public static Boss of(Member member, Room room) {
         return of(null, member, room, false, BOSS_MAX_HP, BOSS_MAX_ENERGY);

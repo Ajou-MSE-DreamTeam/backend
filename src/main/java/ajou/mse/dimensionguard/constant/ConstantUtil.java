@@ -7,6 +7,14 @@ import ajou.mse.dimensionguard.service.GameSyncService;
 public class ConstantUtil {
 
     /**
+     * Player 관련
+     */
+    public static final int BOSS_MAX_HP = 100;
+    public static final int BOSS_MAX_ENERGY = 100;
+    public static final int HERO_MAX_HP = 10;
+    public static final int HERO_MAX_ENERGY = 10;
+
+    /**
      * <p>Sync 관련
      * <p>{@link GameSyncService}
      */

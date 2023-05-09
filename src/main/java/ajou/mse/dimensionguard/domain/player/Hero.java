@@ -8,14 +8,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 
+import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_MAX_ENERGY;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_MAX_HP;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @DiscriminatorValue("hero")
 @Entity
 public class Hero extends Player {
-
-    public static final int HERO_MAX_HP = 10;
-    public static final int HERO_MAX_ENERGY = 10;
 
     @Setter(AccessLevel.PRIVATE)
     @Embedded
