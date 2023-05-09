@@ -1,4 +1,4 @@
-package ajou.mse.dimensionguard.dto.in_game.request;
+package ajou.mse.dimensionguard.dto.in_game;
 
 import ajou.mse.dimensionguard.domain.player.Position;
 import ajou.mse.dimensionguard.dto.redis.RedisSkillInfo;

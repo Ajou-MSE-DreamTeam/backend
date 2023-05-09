@@ -1,6 +1,7 @@
 package ajou.mse.dimensionguard.dto.in_game.request;
 
 import ajou.mse.dimensionguard.domain.player.Position;
+import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 

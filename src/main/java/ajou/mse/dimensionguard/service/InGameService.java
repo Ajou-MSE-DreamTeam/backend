@@ -4,7 +4,7 @@ import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Boss;
 import ajou.mse.dimensionguard.domain.player.Hero;
 import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
-import ajou.mse.dimensionguard.dto.in_game.request.SkillDto;
+import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package ajou.mse.dimensionguard.service;
 
-import ajou.mse.dimensionguard.dto.in_game.request.SkillDto;
+import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import ajou.mse.dimensionguard.dto.redis.RedisSkillInfo;
 import ajou.mse.dimensionguard.repository.redis.RedisSkillInfoRepository;
 import lombok.RequiredArgsConstructor;

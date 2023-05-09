@@ -1,6 +1,6 @@
 package ajou.mse.dimensionguard.dto.in_game.response;
 
-import ajou.mse.dimensionguard.dto.in_game.request.SkillDto;
+import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
 import ajou.mse.dimensionguard.dto.player.response.PlayerResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
