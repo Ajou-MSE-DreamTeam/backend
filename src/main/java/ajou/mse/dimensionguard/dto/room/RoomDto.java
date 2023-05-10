@@ -16,20 +16,22 @@ public class RoomDto {
 
     private Integer id;
     private RoomStatus status;
+    private LocalDateTime gameStartedAt;
     private List<PlayerDto> playerDtos;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Integer createdBy;
     private Integer updatedBy;
 
-    public static RoomDto of(Integer id, RoomStatus status, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
-        return new RoomDto(id, status, playerDtos, createdAt, updatedAt, createdBy, updatedBy);
+    public static RoomDto of(Integer id, RoomStatus status, LocalDateTime gameStartedAt, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+        return new RoomDto(id, status, gameStartedAt, playerDtos, createdAt, updatedAt, createdBy, updatedBy);
     }
 
     public static RoomDto from(Room room) {
         return of(
                 room.getId(),
                 room.getStatus(),
+                room.getGameStartedAt(),
                 room.getPlayers().stream()
                         .map(PlayerDto::from)
                         .toList(),

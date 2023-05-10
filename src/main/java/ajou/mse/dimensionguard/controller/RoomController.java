@@ -22,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "게임 룸")
@@ -141,15 +142,17 @@ public class RoomController {
                     example = "1"
             ) @PathVariable Integer roomId
     ) {
-        RoomDto roomDto = roomService.ready(userPrincipal.getMemberId(), roomId);
+        roomService.ready(userPrincipal.getMemberId(), roomId);
 
         try {
             gameSyncService.waitUntilEveryoneIsReady(roomId);
+            roomService.setGameStartedAt(roomId, LocalDateTime.now());
         } catch (Exception ex) {
             roomService.init(roomId);
             throw ex;
         }
 
+        RoomDto roomDto = roomService.findDtoById(roomId);
         return RoomResponse.from(roomDto);
     }
 }
