@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +81,7 @@ public class RoomService {
     }
 
     @Transactional
-    public RoomDto ready(Integer loginMemberId, Integer roomId) {
+    public void ready(Integer loginMemberId, Integer roomId) {
         Room room = this.findEntityById(roomId);
         if (room.getStatus() == RoomStatus.READY) {
             room.start();
@@ -88,8 +89,6 @@ public class RoomService {
 
         Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
         player.setReady();
-
-        return RoomDto.from(room);
     }
 
     @Transactional
@@ -97,6 +96,14 @@ public class RoomService {
         Room room = this.findEntityById(roomId);
         room.init();
         room.getPlayers().forEach(Player::setNotReady);
+    }
+
+    @Transactional
+    public void setGameStartedAt(Integer roomId, LocalDateTime dateTime) {
+        Room room = findEntityById(roomId);
+        if (room.getGameStartedAt() == null) {
+            room.setGameStartedAt(dateTime);
+        }
     }
 
     private void validateAlreadyParticipating(Integer loginMemberId) {
