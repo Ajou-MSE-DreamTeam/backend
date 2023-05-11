@@ -14,28 +14,28 @@ public class PlayerResponse {
     @Schema(description = "PK of player", example = "3")
     private Integer id;
 
-    @Schema(description = "회원 정보")
+    @Schema(description = "Member information")
     private MemberResponse member;
 
-    @Schema(description = "참여중인 게임 룸의 PK", example = "2")
+    @Schema(description = "PK of the game room that the player participating in", example = "2")
     private Integer roomId;
 
-    @Schema(description = "보스 여부", example = "false")
+    @Schema(description = "Weather or not the player is boss", example = "false")
     private Boolean isBoss;
 
-    @Schema(description = "체력", example = "100")
+    @Schema(description = "Health point", example = "100")
     private Integer hp;
 
-    @Schema(description = "에너지", example = "100")
+    @Schema(description = "Energy point", example = "100")
     private Integer energy;
 
-    @Schema(description = "좌표 정보")
+    @Schema(description = "Position information")
     private Position pos;
 
-    @Schema(description = "가한 데미지", example = "5")
+    @Schema(description = "Damage dealt", example = "5")
     private Integer damageDealt;
 
-    @Schema(description = "현재 취하고 있는 모션", example = "2")
+    @Schema(description = "Motion the current player taking", example = "2")
     private Integer motion;
 
     public static PlayerResponse from(PlayerDto dto) {

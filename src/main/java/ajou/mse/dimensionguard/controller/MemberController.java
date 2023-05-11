@@ -26,13 +26,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @Operation(
-            summary = "회원가입",
-            description = "<p>ID, PW를 전달받아 회원가입을 진행합니다."
+            summary = "Sign up",
+            description = "<p>Receive ID and PW and proceed sign up."
     )
     @ApiResponses({
             @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = MemberResponse.class))),
-            @ApiResponse(description = "<li>[2000] 전달받은 id가 이미 사용중인 계정 id인 경우" +
-                    "<li>[2002] 전달받은 닉네임이 이미 사용중인 닉네임인 경우",
+            @ApiResponse(description = "<p>[2000] If the account ID passed is already in use" +
+                    "<p>[2002] If the nickname passed is already in use",
                     responseCode = "409", content = @Content)
     })
     @PostMapping
@@ -44,9 +44,9 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "계정 id 중복 여부 확인",
-            description = "<p>이미 사용중인 id인지 확인합니다." +
-                    "<p>사용중인 id라면 <code>true</code>를, 사용중이지 않은 id라면 <code>false</code>를 반환합니다."
+            summary = "Check for duplicate account IDs.",
+            description = "<p>Check if the account id is already in use." +
+                    "<p>Returns <code>true</code> if the account id is in use, or <code>false</code> if the account id is not in use."
     )
     @GetMapping("/id/existence")
     public ExistenceResponse checkAccountIdExistence(@RequestParam String id) {
@@ -54,9 +54,9 @@ public class MemberController {
     }
 
     @Operation(
-            summary = "닉네임 중복 여부 확인",
-            description = "<p>이미 사용중인 닉네임인지 확인합니다." +
-                    "<p>사용중인 닉네임이라면 <code>true</code>를, 사용중이지 않은 닉네임이라면 <code>false</code>를 반환합니다."
+            summary = "Check for duplicate nickname.",
+            description = "<p>Check if the nickname is already in use." +
+                    "<p>Returns <code>true</code> if nickname is in use, or <code>false</code> if nickname is not in use."
     )
     @GetMapping("/name/existence")
     public ExistenceResponse checkMemberNameExistence(@RequestParam String name) {

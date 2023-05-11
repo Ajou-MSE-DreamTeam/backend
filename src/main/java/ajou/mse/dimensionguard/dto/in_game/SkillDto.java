@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class SkillDto {
 
-    @Schema(description = "스킬 번호", example = "5")
+    @Schema(description = "Skill number", example = "5")
     @NotNull
     private Integer num;
 
-    @Schema(description = "스킬을 사용한 위치")
+    @Schema(description = "Where the skill was used")
     @NotNull
     private Position pos;
 

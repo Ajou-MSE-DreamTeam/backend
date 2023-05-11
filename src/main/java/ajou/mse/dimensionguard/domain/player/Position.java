@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Position {
 
-    @Schema(description = "x 좌표", example = "15.22")
+    @Schema(description = "x coordinate", example = "15.22")
     @NotNull
     private Double x;
 
-    @Schema(description = "y 좌표", example = "30.5")
+    @Schema(description = "y coordinate", example = "30.5")
     @NotNull
     private Double y;
 }

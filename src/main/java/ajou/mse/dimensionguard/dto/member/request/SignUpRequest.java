@@ -17,7 +17,7 @@ public class SignUpRequest {
     @NotEmpty
     private String password;
 
-    @Schema(description = "닉네임", example = "홍길동")
+    @Schema(description = "Nickname", example = "Woogie")
     private String name;
 
     public MemberDto toDto() {

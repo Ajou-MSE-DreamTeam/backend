@@ -1,6 +1,5 @@
 package ajou.mse.dimensionguard.controller;
 
-import ajou.mse.dimensionguard.constant.ConstantUtil;
 import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
 import ajou.mse.dimensionguard.security.UserPrincipal;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static ajou.mse.dimensionguard.constant.ConstantUtil.SLEEP_MILLIS_BEFORE_REQ_COUNT_RESET;
 
-@Tag(name = "인게임 관련")
+@Tag(name = "In-game related")
 @RequiredArgsConstructor
 @RequestMapping("/api/in-game")
 @RestController
@@ -31,8 +30,12 @@ public class InGameController {
     private final GameSyncService gameSyncService;
 
     @Operation(
-            summary = "인게임 데이터 갱신",
-            description = "",
+            summary = "Update in-game data",
+            description = "<p>Update in-game data." +
+                    "<p>If you are a boss, deliver the skill you used to the players." +
+                    "<p>If you are a hero, update your hp, energy, position, damage dealt, and motion data on server." +
+                    "You also deal damage to boss equal to your damage dealt." +
+                    "<p>In response, return the newly updated data of all players.",
             security = @SecurityRequirement(name = "access-token")
     )
     @PostMapping

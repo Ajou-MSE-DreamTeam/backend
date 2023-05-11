@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 public class CheckGameStartResponse {
 
-    @Schema(description = "게임 시작 여부", example = "false")
+    @Schema(description = "Weather or not the game is started", example = "false")
     private Boolean isStarted;
 
     private List<PlayerCompactResponseWithReadyStatus> players;
