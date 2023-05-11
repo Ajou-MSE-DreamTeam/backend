@@ -14,10 +14,10 @@ import java.util.List;
 @Getter
 public class InGameResponse {
 
-    @Schema(description = "보스가 사용한 스킬", example = "10")
+    @Schema(description = "Skill was used by boss", example = "10")
     private SkillDto skillUsed;
 
-    @Schema(description = "게임에 참여중인 플레이어들의 정보")
+    @Schema(description = "Information about the players in the room")
     private List<PlayerResponse> players;
 
     public static InGameResponse of(SkillDto skillUsed, List<PlayerDto> players) {

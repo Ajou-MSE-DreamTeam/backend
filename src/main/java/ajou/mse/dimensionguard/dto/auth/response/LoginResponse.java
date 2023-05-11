@@ -10,10 +10,10 @@ import lombok.Getter;
 @Getter
 public class LoginResponse {
 
-    @Schema(description = "로그인 유저 정보")
+    @Schema(description = "Information to logged in user")
     MemberResponse loggedInMember;
 
-    @Schema(description = "Token 정보")
+    @Schema(description = "Token information")
     TokenResponse token;
 
     public static LoginResponse of(MemberResponse loggedInMember, TokenResponse token) {

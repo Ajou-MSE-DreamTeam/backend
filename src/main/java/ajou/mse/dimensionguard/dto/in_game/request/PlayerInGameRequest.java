@@ -10,35 +10,35 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class PlayerInGameRequest {
 
-    @Schema(description = "보스인지 여부", example = "false")
+    @Schema(description = "Weather or not the player is boss", example = "false")
     @NotNull
     private Boolean isBoss;
 
-    @Schema(description = "체력", example = "100")
+    @Schema(description = "Health point", example = "100")
     @NotNull
     private Integer hp;
 
-    @Schema(description = "에너지", example = "50")
+    @Schema(description = "Energy point", example = "50")
     @NotNull
     private Integer energy;
 
     // For hero
-    @Schema(description = "<p>현재 위치 (for hero)" +
-            "<p>해당하지 않는 경우(boss인 경우) <code>null</code>로 전달해도 된다.")
+    @Schema(description = "<p>Current position(for hero)" +
+            "<p>if not applicable(if boss), you can pass it as <code>null</code>")
     private Position pos;
 
-    @Schema(description = "<p>가한 데미지 (for hero)" +
-            "<p>해당하지 않는 경우(boss인 경우) <code>null</code>로 전달해도 된다.",
+    @Schema(description = "<p>Damage dealt(for hero)" +
+            "<p>if not applicable(if boss), you can pass it as <code>null</code>",
             example = "5")
     private Integer damageDealt;
 
-    @Schema(description = "<p>모션 (for hero)" +
-            "<p>해당하지 않는 경우(boss인 경우) <code>null</code>로 전달해도 된다.",
+    @Schema(description = "<p>Motion(for hero)" +
+            "<p>if not applicable(if boss), you can pass it as <code>null</code>",
             example = "3")
     private Integer motion;
 
     // For boss
-    @Schema(description = "<p>사용한 스킬 (for boss)." +
-            "<p>해당하지 않는 경우(hero인 경우) <code>null</code>로 전달해도 된다.")
+    @Schema(description = "<p>Skill was used(for boss)" +
+            "<p>if not applicable(if hero), you can pass it as <code>null</code>")
     private SkillDto skillUsed;
 }

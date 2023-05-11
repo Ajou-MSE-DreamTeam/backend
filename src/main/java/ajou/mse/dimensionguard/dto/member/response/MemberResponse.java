@@ -9,13 +9,13 @@ import lombok.Getter;
 @Getter
 public class MemberResponse {
 
-    @Schema(description = "회원의 PK", example = "1")
+    @Schema(description = "PK of member", example = "1")
     private Integer id;
 
-    @Schema(description = "계정 id", example = "test1234")
+    @Schema(description = "Account id", example = "test1234")
     private String accountId;
 
-    @Schema(description = "닉네임", example = "홍길동")
+    @Schema(description = "Nickname", example = "Woogie")
     private String name;
 
     public static MemberResponse from(MemberDto dto) {

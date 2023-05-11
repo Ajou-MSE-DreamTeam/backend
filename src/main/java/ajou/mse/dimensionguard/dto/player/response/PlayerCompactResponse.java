@@ -15,10 +15,10 @@ public class PlayerCompactResponse {
     @Schema(description = "PK of member", example = "1")
     private Integer memberId;
 
-    @Schema(description = "닉네임", example = "홍길동")
+    @Schema(description = "Nickname", example = "Woogie")
     private String name;
 
-    @Schema(description = "보스 여부", example = "false")
+    @Schema(description = "Weather or not the player is boss", example = "false")
     private Boolean isBoss;
 
     public static PlayerCompactResponse from(PlayerDto dto) {

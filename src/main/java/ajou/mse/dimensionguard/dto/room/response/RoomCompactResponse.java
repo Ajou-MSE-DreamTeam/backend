@@ -15,10 +15,10 @@ public class RoomCompactResponse {
 
     private RoomStatus status;
 
-    @Schema(description = "호스트(방장)의 닉네임", example = "홍길동")
+    @Schema(description = "Nickname of host", example = "Woogie")
     private String hostName;
 
-    @Schema(description = "룸에 참가중인 인원수", example = "3")
+    @Schema(description = "Number of players in the room", example = "3")
     private Integer numOfPlayers;
 
     public static RoomCompactResponse from(RoomDto dto, String hostName) {
