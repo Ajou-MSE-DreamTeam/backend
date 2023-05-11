@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "플레이어")
+@Tag(name = "Player")
 @RequiredArgsConstructor
 @RequestMapping("/api/players")
 @RestController
@@ -21,10 +21,10 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @Operation(
-            summary = "방 나가기",
-            description = "<p>참여중인 게임 방에서 나갑니다. " +
-                    "<p>방을 나간다는 것은 참여중인 방에서 자신의 player 데이터를 삭제한다는 의미입니다." +
-                    "<p>방을 나가려는 유저가 방의 호스트라면 방 자체를 해산(삭제)합니다.",
+            summary = "Leaving the room",
+            description = "<p>Leave the game room you're participating in. " +
+                    "<p>Leaving a room means deleting your own player data from the room you're participating in." +
+                    "<p>If the user trying to leave is the host of room, will dissolve(delete) the room itself.",
             security = @SecurityRequirement(name = "access-token")
     )
     @DeleteMapping

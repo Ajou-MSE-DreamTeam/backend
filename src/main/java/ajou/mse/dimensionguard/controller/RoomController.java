@@ -25,7 +25,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Tag(name = "게임 룸")
+@Tag(name = "Room")
 @RequiredArgsConstructor
 @RequestMapping("/api/rooms")
 @RestController
@@ -36,14 +36,14 @@ public class RoomController {
     private final GameSyncService gameSyncService;
 
     @Operation(
-            summary = "게임 룸 생성",
-            description = "<p>게임 룸(대기실)을 생성합니다." +
-                    "<p>생성한 호스트는 boss player가 됩니다.",
+            summary = "Create game room",
+            description = "<p>Create a game room(waiting room)." +
+                    "<p>The host who created the room will be a boss player.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = RoomResponseWithPlayerStatus.class))),
-            @ApiResponse(description = "[2503] 이미 다른 방에 참여중이므로 참여중인 방에서 나간 후 재시도가 필요한 경우", responseCode = "409", content = @Content)
+            @ApiResponse(description = "[2503] If you are already joining another room and need to retry after leaving the room you are joining", responseCode = "409", content = @Content)
     })
     @PostMapping
     public ResponseEntity<RoomResponseWithPlayerStatus> create(
@@ -57,14 +57,14 @@ public class RoomController {
     }
 
     @Operation(
-            summary = "게임 룸 참가",
-            description = "<p>게임 룸(대기실)에 참가합니다." +
-                    "<p>참가한 플레이어는 hero player가 됩니다.",
+            summary = "Join game room",
+            description = "<p>Join a game room(waiting room)." +
+                    "<p>The participating player becomes the hero player.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = RoomResponseWithPlayerStatus.class))),
-            @ApiResponse(description = "[2503] 이미 다른 방에 참여중이므로 참여중인 방에서 나간 후 재시도가 필요한 경우", responseCode = "409", content = @Content)
+            @ApiResponse(description = "[2503] If you are already joining another room and need to retry after leaving the room you are joining", responseCode = "409", content = @Content)
     })
     @PostMapping("/{roomId}/join")
     public ResponseEntity<RoomResponseWithPlayerStatus> join(
@@ -83,8 +83,8 @@ public class RoomController {
     }
 
     @Operation(
-            summary = "대기실 목록 조회",
-            description = "<p>대기실(게임이 아직 시작되지 않은 게임 룸) 전체 목록을 조회합니다",
+            summary = "Get waiting room list",
+            description = "<p>Get the list of waiting rooms(game rooms where games haven't started yet).",
             security = @SecurityRequirement(name = "access-token")
     )
     @GetMapping
@@ -98,14 +98,14 @@ public class RoomController {
     }
 
     @Operation(
-            summary = "게임 시작 여부 확인",
-            description = "<p>특정 게임 룸에 대해 게임 시작 여부를 확인합니다." +
-                    "<p>게임이 진행중이거나 종료된 경우에는 <code>true</code>를, 게임이 아직 시작되지 않은 상태라면 <code>false</code>를 응답합니다.",
+            summary = "Check if the game has started",
+            description = "<p>Check if a game has started for a specific game room." +
+                    "<p>Return <code>true</code> if the game is in progress or has ended, or <code>false</code> if the game has not yet started.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = CheckGameStartResponse.class))),
-            @ApiResponse(description = "[2500] 호스트(방장)이 방을 나가 방이 해산되는 등의 이유로 방을 찾을 수 없는 경우.", responseCode = "404", content = @Content)
+            @ApiResponse(description = "[2500] The room cannot be found because the host has left the room, the room is dissolved, etc.", responseCode = "404", content = @Content)
     })
     @GetMapping("/{roomId}/start")
 
@@ -119,18 +119,18 @@ public class RoomController {
     }
 
     @Operation(
-            summary = "게임 준비",
-            description = "<p>게임 준비를 수행합니다." +
-                    "<p>대기실에 있는 player를 ready 상태로 변경합니다." +
-                    "<p>모든 플레이어가 ready 상태가 되었을 때 요청에 대한 응답을 반환합니다." +
-                    "<p>API 호출 후 15초 동안 모든 플레이어가 준비되기를 기다립니다.",
+            summary = "Ready",
+            description = "<p>Perform ready." +
+                    "<p>Change my player in the waiting room to the ready state." +
+                    "<p>Returns a response to the request when all players are ready." +
+                    "<p>Wait up to 15 seconds after the API call for all players to be ready.",
             security = @SecurityRequirement(name = "access-token")
     )
     @ApiResponses({
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = RoomResponse.class))),
             @ApiResponse(
-                    description = "<p>[2501] 서버 내부 오류로 인해 thread sleep이 중단된 경우" +
-                            "<p>[2502] 게임 준비 API 호출 후 15초 동안 참가자 전원의 준비가 되지 않은 경우",
+                    description = "<p>[2501] If thread sleep is interrupted due to an internal server error." +
+                            "<p>[2502] If all participants are not ready for 15 seconds after the API call",
                     responseCode = "500", content = @Content
             )
     })

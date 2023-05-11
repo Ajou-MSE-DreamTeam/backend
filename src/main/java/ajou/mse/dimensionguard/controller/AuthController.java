@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "인증(로그인, Token 관련)")
+@Tag(name = "Authentication (Login, Token)")
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 @RestController
@@ -24,17 +24,17 @@ public class AuthController {
     private final AuthService authService;
 
     @Operation(
-            summary = "로그인",
-            description = "<p>ID, PW를 전달받아 로그인을 수행합니다." +
-                    "<p>로그인 결과로 access token을 응답합니다." +
-                    "<p>추후 로그인 권한이 필요한 api를 호출할 때, " +
-                    "header의 <code>Authorization</code> 속성에 access token을 token type과 함께 담아 요청해야 합니다." +
-                    "<p>Ex) 전달받은 access token이 <code>eyJ.TF9.jrI</code>라면 <strong><code>Authorization: Bearer eyJ.TF9.jrI</code></strong>로 header를 설정한 후 요청해야 함."
+            summary = "Login",
+            description = "<p>It receives ID, PW and performs login." +
+                    "<p>Responds with an access token as the login result." +
+                    "<p>Later, when calling the API that requires login permission, " +
+                    "you must request the access token with the token type in the <code>Authorization</code> attribute of the header." +
+                    "<p>Ex) If the received access token is <code>eyJ.TF9.jrI</code>, you must set the header to <strong><code>Authorization: Bearer eyJ.TF9.jrI</code></strong> before request."
     )
     @ApiResponses({
             @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = LoginResponse.class))),
-            @ApiResponse(description = "[1503] ID가 유효하지 않은 경우", responseCode = "401", content = @Content),
-            @ApiResponse(description = "[1504] 비밀번호가 유효하지 않은 경우", responseCode = "401", content = @Content)
+            @ApiResponse(description = "[1503] If id is invalid", responseCode = "401", content = @Content),
+            @ApiResponse(description = "[1504] If password is invalid", responseCode = "401", content = @Content)
     })
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
