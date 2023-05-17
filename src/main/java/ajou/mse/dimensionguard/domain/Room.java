@@ -2,7 +2,10 @@ package ajou.mse.dimensionguard.domain;
 
 import ajou.mse.dimensionguard.constant.room.RoomStatus;
 import ajou.mse.dimensionguard.domain.player.Player;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +20,7 @@ public class Room extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
-    private Integer id;
+    private Long id;
 
     @Setter(AccessLevel.PRIVATE)
     @Column(nullable = false)
@@ -31,15 +34,19 @@ public class Room extends BaseEntity {
     private List<Player> players = new LinkedList<>();
 
     public static Room of() {
-        return of(null, RoomStatus.READY, null);
+        return of(null, RoomStatus.READY, null, null, null, null, null, null);
     }
 
-    public static Room of(Integer id, RoomStatus status, LocalDateTime gameStartedAt) {
-        return Room.builder()
-                .id(id)
-                .status(status)
-                .gameStartedAt(gameStartedAt)
-                .build();
+    public static Room of(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+        return new Room(id, status, gameStartedAt, players, createdAt, updatedAt, createdBy, updatedBy);
+    }
+
+    private Room(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+        super(createdAt, updatedAt, createdBy, updatedBy);
+        this.id = id;
+        this.status = status;
+        this.gameStartedAt = gameStartedAt;
+        this.players = players;
     }
 
     public void init() {
@@ -52,12 +59,5 @@ public class Room extends BaseEntity {
 
     public void end() {
         this.setStatus(RoomStatus.DONE);
-    }
-
-    @Builder(access = AccessLevel.PRIVATE)
-    private Room(Integer id, RoomStatus status, LocalDateTime gameStartedAt) {
-        this.id = id;
-        this.status = status;
-        this.gameStartedAt = gameStartedAt;
     }
 }
