@@ -12,5 +12,5 @@ public interface RoomRepositoryQCustom {
      * @param memberId PK of member
      * @return 조회된 room
      */
-    Optional<Room> findByMemberId(Integer memberId);
+    Optional<Room> findByMemberId(Long memberId);
 }

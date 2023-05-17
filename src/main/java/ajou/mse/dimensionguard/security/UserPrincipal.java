@@ -30,7 +30,7 @@ public class UserPrincipal implements UserDetails {
                 .toList();
     }
 
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return memberDto.getId();
     }
 

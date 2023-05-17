@@ -10,7 +10,7 @@ import lombok.Getter;
 public class MemberResponse {
 
     @Schema(description = "PK of member", example = "1")
-    private Integer id;
+    private Long id;
 
     @Schema(description = "Account id", example = "test1234")
     private String accountId;

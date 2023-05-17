@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RoomRepository extends
-        JpaRepository<Room, Integer>,
+        JpaRepository<Room, Long>,
         RoomRepositoryQCustom {
 
     List<Room> findAllByStatus(RoomStatus status);

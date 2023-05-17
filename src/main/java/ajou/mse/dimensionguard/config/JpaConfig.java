@@ -19,7 +19,7 @@ import java.util.Optional;
 public class JpaConfig {
 
     @Bean
-    public AuditorAware<Integer> auditorAware() {
+    public AuditorAware<Long> auditorAware() {
         return () -> {
             try {
                 return Optional.ofNullable(SecurityContextHolder.getContext())

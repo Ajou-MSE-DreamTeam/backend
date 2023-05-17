@@ -14,16 +14,16 @@ import java.util.List;
 @Getter
 public class RoomDto {
 
-    private Integer id;
+    private Long id;
     private RoomStatus status;
     private LocalDateTime gameStartedAt;
     private List<PlayerDto> playerDtos;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Integer createdBy;
-    private Integer updatedBy;
+    private Long createdBy;
+    private Long updatedBy;
 
-    public static RoomDto of(Integer id, RoomStatus status, LocalDateTime gameStartedAt, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+    public static RoomDto of(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
         return new RoomDto(id, status, gameStartedAt, playerDtos, createdAt, updatedAt, createdBy, updatedBy);
     }
 

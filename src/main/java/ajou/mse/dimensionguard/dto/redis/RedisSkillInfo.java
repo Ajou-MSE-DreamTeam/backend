@@ -16,7 +16,7 @@ import static ajou.mse.dimensionguard.constant.ConstantUtil.SKILL_INFO_TIMEOUT;
 public class RedisSkillInfo {
 
     @Id
-    private Integer roomId;
+    private Long roomId;
 
     private Integer num;
 
@@ -27,7 +27,7 @@ public class RedisSkillInfo {
 
     private LocalDateTime createdAt;
 
-    public RedisSkillInfo(Integer roomId, Integer num, Position pos) {
+    public RedisSkillInfo(Long roomId, Integer num, Position pos) {
         this.roomId = roomId;
         this.num = num;
         this.pos = pos;

@@ -60,7 +60,7 @@ public class JwtTokenProvider {
      * @param memberId 로그인하려는 회원의 id(PK)
      * @return 생성한 jwt token
      */
-    public JwtTokenInfoDto createAccessToken(Integer memberId) {
+    public JwtTokenInfoDto createAccessToken(Long memberId) {
         return createJwtToken(memberId, RoleType.USER, ACCESS_TOKEN_EXPIRED_DURATION);
     }
 
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
      * @param memberId 로그인하려는 회원의 id(PK)
      * @return 생성한 jwt token
      */
-    public JwtTokenInfoDto createRefreshToken(Integer memberId) {
+    public JwtTokenInfoDto createRefreshToken(Long memberId) {
         return createJwtToken(memberId, RoleType.USER, REFRESH_TOKEN_EXPIRED_DURATION);
     }
 
@@ -129,7 +129,7 @@ public class JwtTokenProvider {
      * @param tokenExpiredDuration Token 만료 시간
      * @return 생성된 jwt token과 만료 시각이 포함된 <code>JwtTokenInfoDto</code> 객체
      */
-    private JwtTokenInfoDto createJwtToken(Integer memberId, RoleType roleType, Long tokenExpiredDuration) {
+    private JwtTokenInfoDto createJwtToken(Long memberId, RoleType roleType, Long tokenExpiredDuration) {
         Date now = new Date();
         Date expiresAt = new Date(now.getTime() + tokenExpiredDuration);
         String token = Jwts.builder()

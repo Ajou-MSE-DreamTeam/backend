@@ -12,9 +12,9 @@ import lombok.Getter;
 @Getter
 public class PlayerDto {
 
-    private Integer id;
+    private Long id;
     private MemberDto memberDto;
-    private Integer roomId;
+    private Long roomId;
     private Boolean isBoss;
     private Boolean isReady;
     private Integer hp;
@@ -23,7 +23,7 @@ public class PlayerDto {
     private Integer damageDealt;
     private Integer motion;
 
-    public static PlayerDto of(Integer id, MemberDto memberDto, Integer roomId, Boolean isBoss, Boolean isReady, Integer hp, Integer energy, Position position, Integer damageDealt, Integer motion) {
+    public static PlayerDto of(Long id, MemberDto memberDto, Long roomId, Boolean isBoss, Boolean isReady, Integer hp, Integer energy, Position position, Integer damageDealt, Integer motion) {
         return new PlayerDto(id, memberDto, roomId, isBoss, isReady, hp, energy, position, damageDealt, motion);
     }
 

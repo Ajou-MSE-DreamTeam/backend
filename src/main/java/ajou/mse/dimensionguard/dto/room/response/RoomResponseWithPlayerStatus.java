@@ -14,7 +14,7 @@ import java.util.List;
 public class RoomResponseWithPlayerStatus {
 
     @Schema(description = "PK of room", example = "1")
-    private Integer id;
+    private Long id;
 
     private RoomStatus status;
 

@@ -4,7 +4,7 @@ import ajou.mse.dimensionguard.exception.common.NotFoundException;
 
 public class MemberIdNotFoundException extends NotFoundException {
 
-    public MemberIdNotFoundException(int memberId) {
+    public MemberIdNotFoundException(long memberId) {
         super("memberId=" + memberId);
     }
 }

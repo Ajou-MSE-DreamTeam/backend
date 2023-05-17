@@ -32,12 +32,12 @@ public class MemberService {
         return MemberDto.from(savedMember);
     }
 
-    public Member findEntityById(Integer memberId) {
+    public Member findEntityById(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberIdNotFoundException(memberId));
     }
 
-    public MemberDto findDtoById(Integer memberId) {
+    public MemberDto findDtoById(Long memberId) {
         return MemberDto.from(findEntityById(memberId));
     }
 

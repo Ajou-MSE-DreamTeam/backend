@@ -26,21 +26,21 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Optional<Player> findOptEntityByMemberId(Integer memberId) {
+    public Optional<Player> findOptByMemberId(Long memberId) {
         return playerRepository.findByMember_Id(memberId);
     }
 
-    public Player findEntityByMemberId(Integer memberId) {
-        return this.findOptEntityByMemberId(memberId)
+    public Player findByMemberId(Long memberId) {
+        return this.findOptByMemberId(memberId)
                 .orElseThrow(() -> new PlayerNotFoundByMemberIdException(memberId));
     }
 
-    public Player findEntityByMemberIdAndRoomId(Integer memberId, Integer roomId) {
+    public Player findByMemberIdAndRoomId(Long memberId, Long roomId) {
         return playerRepository.findByMember_IdAndRoom_Id(memberId, roomId)
                 .orElseThrow(() -> new PlayerNotFoundByMemberAndRoomException(memberId, roomId));
     }
 
-    public List<Player> findAllEntityByRoom(Room room) {
+    public List<Player> findAllByRoom(Room room) {
         return playerRepository.findAllByRoom(room);
     }
 
@@ -55,8 +55,8 @@ public class PlayerService {
     }
 
     @Transactional
-    public void exit(Integer loginMemberId) {
-        Player player = this.findEntityByMemberId(loginMemberId);
+    public void exit(Long loginMemberId) {
+        Player player = this.findByMemberId(loginMemberId);
         Room room = player.getRoom();
 
         // 방을 나가려는 유저가 방의 호스트라면 방도 함께 삭제한다

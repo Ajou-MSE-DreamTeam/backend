@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter
 public class MemberDto {
 
-    private Integer id;
+    private Long id;
     private String accountId;
     private String password;
     private String name;
@@ -19,7 +19,7 @@ public class MemberDto {
         return new MemberDto(null, accountId, password, name);
     }
 
-    public static MemberDto of(Integer id, String accountId, String password, String name) {
+    public static MemberDto of(Long id, String accountId, String password, String name) {
         return new MemberDto(id, accountId, password, name);
     }
 
