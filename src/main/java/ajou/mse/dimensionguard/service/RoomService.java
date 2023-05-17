@@ -74,7 +74,6 @@ public class RoomService {
                 .toList();
     }
 
-    @Transactional
     public CheckGameStartResponse checkGameStarted(Integer roomId) {
         RoomDto roomDto = this.findDtoById(roomId);
         return CheckGameStartResponse.from(roomDto);
