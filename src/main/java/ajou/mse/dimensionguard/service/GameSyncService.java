@@ -43,7 +43,7 @@ public class GameSyncService {
     }
 
     public void waitUntilEveryoneIsReady(Long roomId) {
-        Room room = roomService.findEntityById(roomId);
+        Room room = roomService.findById(roomId);
 
         int count = 0;
         try {
@@ -59,7 +59,7 @@ public class GameSyncService {
     }
 
     public void waitUntilEveryoneRequest(Long roomId) {
-        Room room = roomService.findEntityById(roomId);
+        Room room = roomService.findById(roomId);
         int numOfPlayers = room.getPlayers().size();
 
         int threadLoopCount = 0;

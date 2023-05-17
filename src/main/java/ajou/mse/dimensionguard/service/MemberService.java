@@ -32,16 +32,16 @@ public class MemberService {
         return MemberDto.from(savedMember);
     }
 
-    public Member findEntityById(Long memberId) {
+    public Member findById(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberIdNotFoundException(memberId));
     }
 
     public MemberDto findDtoById(Long memberId) {
-        return MemberDto.from(findEntityById(memberId));
+        return MemberDto.from(findById(memberId));
     }
 
-    public Optional<MemberDto> findOptionalDtoByAccountId(String accountId) {
+    public Optional<MemberDto> findOptDtoByAccountId(String accountId) {
         return memberRepository.findByAccountId(accountId)
                 .map(MemberDto::from);
     }

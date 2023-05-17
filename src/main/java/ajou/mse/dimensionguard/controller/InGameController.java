@@ -49,7 +49,7 @@ public class InGameController {
         inGameService.updateInGameData(loginMemberId, inGameRequest);
 
         // sync 맞추기
-        Long roomId = roomService.findEntityByMemberId(loginMemberId).getId();
+        Long roomId = roomService.findByMemberId(loginMemberId).getId();
         gameSyncService.increaseRequestCount(roomId);
         gameSyncService.waitUntilEveryoneRequest(roomId);
         if (inGameRequest.getIsBoss()) {

@@ -26,7 +26,7 @@ public class InGameService {
     public void updateInGameData(Long loginMemberId, PlayerInGameRequest request) {
         if (request.getIsBoss()) {
             bossSkillService.clear();
-            Room room = roomService.findEntityByMemberId(loginMemberId);
+            Room room = roomService.findByMemberId(loginMemberId);
             bossSkillService.addSkill(room.getId(), request.getSkillUsed());
         } else {
             Hero hero = (Hero) playerService.findByMemberId(loginMemberId);

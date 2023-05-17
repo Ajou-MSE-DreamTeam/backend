@@ -34,7 +34,7 @@ public class RoomService {
         validateAlreadyParticipating(loginMemberId);
 
         Room room = roomRepository.save(Room.of());
-        Member host = memberService.findEntityById(loginMemberId);
+        Member host = memberService.findById(loginMemberId);
 
         Player player = playerService.save(Boss.of(host, room));
         room.getPlayers().add(player);
@@ -46,29 +46,29 @@ public class RoomService {
     public RoomDto join(Long loginMemberId, Long roomId) {
         validateAlreadyParticipating(loginMemberId);
 
-        Room room = this.findEntityById(roomId);
-        Member member = memberService.findEntityById(loginMemberId);
+        Room room = this.findById(roomId);
+        Member member = memberService.findById(loginMemberId);
 
         playerService.save(Hero.of(member, room));
 
         return RoomDto.from(room);  // players lazy loading
     }
 
-    public Room findEntityById(Long roomId) {
+    public Room findById(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
-    public Room findEntityByMemberId(Long memberId) {
+    public Room findByMemberId(Long memberId) {
         return roomRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new RoomNotFoundByMemberIdException(memberId));
     }
 
     public RoomDto findDtoById(Long roomId) {
-        return RoomDto.from(findEntityById(roomId));
+        return RoomDto.from(findById(roomId));
     }
 
-    public List<RoomDto> findAllByStatusReady() {
+    public List<RoomDto> findAllDtosByStatusReady() {
         return roomRepository.findAllByStatus(RoomStatus.READY).stream()
                 .map(RoomDto::from)
                 .toList();
@@ -81,7 +81,7 @@ public class RoomService {
 
     @Transactional
     public void ready(Long loginMemberId, Long roomId) {
-        Room room = this.findEntityById(roomId);
+        Room room = this.findById(roomId);
         if (room.getStatus() == RoomStatus.READY) {
             room.start();
         }
@@ -92,14 +92,14 @@ public class RoomService {
 
     @Transactional
     public void init(Long roomId) {
-        Room room = this.findEntityById(roomId);
+        Room room = this.findById(roomId);
         room.init();
         room.getPlayers().forEach(Player::setNotReady);
     }
 
     @Transactional
     public void setGameStartedAt(Long roomId, LocalDateTime startedAt) {
-        Room room = findEntityById(roomId);
+        Room room = findById(roomId);
         if (room.getGameStartedAt() == null) {
             room.setGameStartedAt(startedAt);
         }

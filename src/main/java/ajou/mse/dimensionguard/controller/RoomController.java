@@ -89,7 +89,7 @@ public class RoomController {
     )
     @GetMapping
     public WaitingRoomListResponse searchWaitingRoom() {
-        List<RoomCompactResponse> roomList = roomService.findAllByStatusReady().stream()
+        List<RoomCompactResponse> roomList = roomService.findAllDtosByStatusReady().stream()
                 .map(roomDto -> {
                     MemberDto host = memberService.findDtoById(roomDto.getCreatedBy());
                     return RoomCompactResponse.from(roomDto, host.getName());
