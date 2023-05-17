@@ -1,12 +1,11 @@
 package ajou.mse.dimensionguard.dto.member;
 
 import ajou.mse.dimensionguard.domain.Member;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class MemberDto {
 
@@ -15,16 +14,14 @@ public class MemberDto {
     private String password;
     private String name;
 
-    public static MemberDto of(String accountId, String password, String name) {
-        return new MemberDto(null, accountId, password, name);
-    }
-
-    public static MemberDto of(Long id, String accountId, String password, String name) {
-        return new MemberDto(id, accountId, password, name);
+    public MemberDto(String accountId, String password, String name) {
+        this.accountId = accountId;
+        this.password = password;
+        this.name = name;
     }
 
     public static MemberDto from(Member entity) {
-        return of(
+        return new MemberDto(
                 entity.getId(),
                 entity.getAccountId(),
                 entity.getPassword(),

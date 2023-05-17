@@ -3,14 +3,13 @@ package ajou.mse.dimensionguard.dto.room;
 import ajou.mse.dimensionguard.constant.room.RoomStatus;
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.dto.player.PlayerDto;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class RoomDto {
 
@@ -23,12 +22,8 @@ public class RoomDto {
     private Long createdBy;
     private Long updatedBy;
 
-    public static RoomDto of(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<PlayerDto> playerDtos, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
-        return new RoomDto(id, status, gameStartedAt, playerDtos, createdAt, updatedAt, createdBy, updatedBy);
-    }
-
     public static RoomDto from(Room room) {
-        return of(
+        return new RoomDto(
                 room.getId(),
                 room.getStatus(),
                 room.getGameStartedAt(),

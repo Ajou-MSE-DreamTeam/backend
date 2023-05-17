@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class LoginResponse {
 
@@ -15,8 +15,4 @@ public class LoginResponse {
 
     @Schema(description = "Token information")
     TokenResponse token;
-
-    public static LoginResponse of(MemberResponse loggedInMember, TokenResponse token) {
-        return new LoginResponse(loggedInMember, token);
-    }
 }

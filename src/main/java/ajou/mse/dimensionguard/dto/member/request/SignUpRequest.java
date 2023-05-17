@@ -21,7 +21,7 @@ public class SignUpRequest {
     private String name;
 
     public MemberDto toDto() {
-        return MemberDto.of(
+        return new MemberDto(
                 this.getId(),
                 this.getPassword(),
                 this.getName()

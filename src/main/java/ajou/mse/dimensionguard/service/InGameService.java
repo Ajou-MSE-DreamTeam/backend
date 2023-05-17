@@ -6,6 +6,7 @@ import ajou.mse.dimensionguard.domain.player.Hero;
 import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
+import ajou.mse.dimensionguard.dto.player.response.PlayerResponse;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,11 @@ public class InGameService {
         int numOfPlayers = roomDto.getPlayerDtos().size();
         SkillDto skillUsed = bossSkillService.getSkillUsed(roomId, numOfPlayers);
 
-        return InGameResponse.of(skillUsed, roomDto.getPlayerDtos());
+        return new InGameResponse(
+                skillUsed,
+                roomDto.getPlayerDtos().stream()
+                        .map(PlayerResponse::from)
+                        .toList()
+        );
     }
 }

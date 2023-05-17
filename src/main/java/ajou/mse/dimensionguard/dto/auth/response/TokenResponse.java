@@ -7,7 +7,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class TokenResponse {
 
@@ -16,8 +16,4 @@ public class TokenResponse {
 
     @Schema(description = "Access token expiration time", example = "2023-02-28T17:13:55.473")
     private LocalDateTime accessTokenExpiresAt;
-
-    public static TokenResponse of(String accessToken, LocalDateTime accessTokenExpiresAt) {
-        return new TokenResponse(accessToken, accessTokenExpiresAt);
-    }
 }

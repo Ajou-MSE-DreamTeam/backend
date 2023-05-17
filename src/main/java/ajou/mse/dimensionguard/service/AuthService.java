@@ -30,9 +30,9 @@ public class AuthService {
 
         JwtTokenInfoDto accessToken = jwtTokenProvider.createAccessToken(member.getId());
 
-        return LoginResponse.of(
+        return new LoginResponse(
                 MemberResponse.from(member),
-                TokenResponse.of(accessToken.token(), accessToken.expiresAt())
+                new TokenResponse(accessToken.token(), accessToken.expiresAt())
         );
     }
 
