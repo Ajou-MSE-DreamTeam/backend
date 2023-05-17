@@ -98,10 +98,10 @@ public class RoomService {
     }
 
     @Transactional
-    public void setGameStartedAt(Integer roomId, LocalDateTime dateTime) {
+    public void setGameStartedAt(Integer roomId, LocalDateTime startedAt) {
         Room room = findEntityById(roomId);
         if (room.getGameStartedAt() == null) {
-            room.setGameStartedAt(dateTime);
+            room.setGameStartedAt(startedAt);
         }
     }
 
