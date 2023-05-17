@@ -1,11 +1,11 @@
 package ajou.mse.dimensionguard.domain;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -27,20 +27,15 @@ public class Member extends BaseTimeEntity {
     private String name;
 
     public static Member of(String accountId, String password, String name) {
-        return of(null, accountId, password, name);
+        return of(null, accountId, password, name, null, null);
     }
 
-    public static Member of(Integer id, String accountId, String password, String name) {
-        return Member.builder()
-                .id(id)
-                .accountId(accountId)
-                .password(password)
-                .name(name)
-                .build();
+    public static Member of(Integer id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new Member(id, accountId, password, name, createdAt, updatedAt);
     }
 
-    @Builder(access = AccessLevel.PRIVATE)
-    private Member(Integer id, String accountId, String password, String name) {
+    private Member(Integer id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
         this.id = id;
         this.accountId = accountId;
         this.password = password;

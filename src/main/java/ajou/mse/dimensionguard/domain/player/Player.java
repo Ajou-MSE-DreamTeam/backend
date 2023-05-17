@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -55,7 +56,8 @@ public abstract class Player extends BaseTimeEntity {
         this.setEnergy(energy);
     }
 
-    protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy) {
+    protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
         this.id = id;
         this.member = member;
         this.room = room;
