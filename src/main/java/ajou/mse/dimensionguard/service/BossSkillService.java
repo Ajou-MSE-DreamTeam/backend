@@ -17,13 +17,13 @@ public class BossSkillService {
     private final RedisSkillInfoRepository redisSkillInfoRepository;
 
     @Transactional
-    public void addSkill(Integer roomId, SkillDto skill) {
+    public void addSkill(Long roomId, SkillDto skill) {
         RedisSkillInfo redisSkillInfo = new RedisSkillInfo(roomId, skill.getNum(), skill.getPos());
         redisSkillInfoRepository.save(redisSkillInfo);
     }
 
     @Transactional
-    public SkillDto getSkillUsed(Integer roomId, Integer numOfPlayers) {
+    public SkillDto getSkillUsed(Long roomId, Integer numOfPlayers) {
         Optional<RedisSkillInfo> optionalSkillInfo = redisSkillInfoRepository.findById(roomId);
 
         if (optionalSkillInfo.isEmpty()) {

@@ -15,7 +15,7 @@ public class RoomRepositoryQCustomImpl implements RoomRepositoryQCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<Room> findByMemberId(Integer memberId) {
+    public Optional<Room> findByMemberId(Long memberId) {
         return Optional.ofNullable(
                 queryFactory.select(room)
                         .from(player)

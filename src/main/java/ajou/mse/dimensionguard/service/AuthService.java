@@ -23,7 +23,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public LoginResponse login(String accountId, String password) {
-        MemberDto member = memberService.findOptionalDtoByAccountId(accountId)
+        MemberDto member = memberService.findOptDtoByAccountId(accountId)
                 .orElseThrow(() -> new AccountIdNotFoundException(accountId));
 
         validatePassword(password, member);

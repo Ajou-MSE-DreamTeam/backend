@@ -17,13 +17,13 @@ public abstract class BaseEntity extends BaseTimeEntity {
 
     @CreatedBy
     @Column(nullable = false, updatable = false)
-    protected Integer createdBy;
+    protected Long createdBy;
 
     @LastModifiedBy
     @Column(nullable = false, updatable = false)
-    protected Integer updatedBy;
+    protected Long updatedBy;
 
-    protected BaseEntity(LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+    protected BaseEntity(LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
         super(createdAt, updatedAt);
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;

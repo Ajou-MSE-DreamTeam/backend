@@ -30,11 +30,11 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
     @Transactional
-    public RoomDto createRoom(Integer loginMemberId) {
+    public RoomDto createRoom(Long loginMemberId) {
         validateAlreadyParticipating(loginMemberId);
 
         Room room = roomRepository.save(Room.of());
-        Member host = memberService.findEntityById(loginMemberId);
+        Member host = memberService.findById(loginMemberId);
 
         Player player = playerService.save(Boss.of(host, room));
         room.getPlayers().add(player);
@@ -43,70 +43,70 @@ public class RoomService {
     }
 
     @Transactional
-    public RoomDto join(Integer loginMemberId, Integer roomId) {
+    public RoomDto join(Long loginMemberId, Long roomId) {
         validateAlreadyParticipating(loginMemberId);
 
-        Room room = this.findEntityById(roomId);
-        Member member = memberService.findEntityById(loginMemberId);
+        Room room = this.findById(roomId);
+        Member member = memberService.findById(loginMemberId);
 
         playerService.save(Hero.of(member, room));
 
         return RoomDto.from(room);  // players lazy loading
     }
 
-    public Room findEntityById(Integer roomId) {
+    public Room findById(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new RoomIdNotFoundException(roomId));
     }
 
-    public Room findEntityByMemberId(Integer memberId) {
+    public Room findByMemberId(Long memberId) {
         return roomRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new RoomNotFoundByMemberIdException(memberId));
     }
 
-    public RoomDto findDtoById(Integer roomId) {
-        return RoomDto.from(findEntityById(roomId));
+    public RoomDto findDtoById(Long roomId) {
+        return RoomDto.from(findById(roomId));
     }
 
-    public List<RoomDto> findAllByStatusReady() {
+    public List<RoomDto> findAllDtosByStatusReady() {
         return roomRepository.findAllByStatus(RoomStatus.READY).stream()
                 .map(RoomDto::from)
                 .toList();
     }
 
-    public CheckGameStartResponse checkGameStarted(Integer roomId) {
+    public CheckGameStartResponse checkGameStarted(Long roomId) {
         RoomDto roomDto = this.findDtoById(roomId);
         return CheckGameStartResponse.from(roomDto);
     }
 
     @Transactional
-    public void ready(Integer loginMemberId, Integer roomId) {
-        Room room = this.findEntityById(roomId);
+    public void ready(Long loginMemberId, Long roomId) {
+        Room room = this.findById(roomId);
         if (room.getStatus() == RoomStatus.READY) {
             room.start();
         }
 
-        Player player = playerService.findEntityByMemberIdAndRoomId(loginMemberId, roomId);
+        Player player = playerService.findByMemberIdAndRoomId(loginMemberId, roomId);
         player.setReady();
     }
 
     @Transactional
-    public void init(Integer roomId) {
-        Room room = this.findEntityById(roomId);
+    public void init(Long roomId) {
+        Room room = this.findById(roomId);
         room.init();
         room.getPlayers().forEach(Player::setNotReady);
     }
 
     @Transactional
-    public void setGameStartedAt(Integer roomId, LocalDateTime startedAt) {
-        Room room = findEntityById(roomId);
+    public void setGameStartedAt(Long roomId, LocalDateTime startedAt) {
+        Room room = findById(roomId);
         if (room.getGameStartedAt() == null) {
             room.setGameStartedAt(startedAt);
         }
     }
 
-    private void validateAlreadyParticipating(Integer loginMemberId) {
-        Optional<Player> optionalPlayer = playerService.findOptEntityByMemberId(loginMemberId);
+    private void validateAlreadyParticipating(Long loginMemberId) {
+        Optional<Player> optionalPlayer = playerService.findOptByMemberId(loginMemberId);
         if (optionalPlayer.isPresent()) {
             throw new AlreadyParticipatingException(optionalPlayer.get().getRoom().getId());
         }

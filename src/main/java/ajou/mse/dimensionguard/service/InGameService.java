@@ -23,13 +23,13 @@ public class InGameService {
     private final BossSkillService bossSkillService;
 
     @Transactional
-    public void updateInGameData(Integer loginMemberId, PlayerInGameRequest request) {
+    public void updateInGameData(Long loginMemberId, PlayerInGameRequest request) {
         if (request.getIsBoss()) {
             bossSkillService.clear();
-            Room room = roomService.findEntityByMemberId(loginMemberId);
+            Room room = roomService.findByMemberId(loginMemberId);
             bossSkillService.addSkill(room.getId(), request.getSkillUsed());
         } else {
-            Hero hero = (Hero) playerService.findEntityByMemberId(loginMemberId);
+            Hero hero = (Hero) playerService.findByMemberId(loginMemberId);
             hero.update(
                     request.getHp(),
                     request.getEnergy(),
@@ -48,7 +48,7 @@ public class InGameService {
         }
     }
 
-    public InGameResponse getInGameData(Integer roomId) {
+    public InGameResponse getInGameData(Long roomId) {
         RoomDto roomDto = roomService.findDtoById(roomId);
 
         int numOfPlayers = roomDto.getPlayerDtos().size();

@@ -43,13 +43,13 @@ public class InGameController {
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
             @RequestBody PlayerInGameRequest inGameRequest
     ) throws InterruptedException {
-        Integer loginMemberId = userPrincipal.getMemberId();
+        Long loginMemberId = userPrincipal.getMemberId();
 
         // 내 정보 update
         inGameService.updateInGameData(loginMemberId, inGameRequest);
 
         // sync 맞추기
-        Integer roomId = roomService.findEntityByMemberId(loginMemberId).getId();
+        Long roomId = roomService.findByMemberId(loginMemberId).getId();
         gameSyncService.increaseRequestCount(roomId);
         gameSyncService.waitUntilEveryoneRequest(roomId);
         if (inGameRequest.getIsBoss()) {

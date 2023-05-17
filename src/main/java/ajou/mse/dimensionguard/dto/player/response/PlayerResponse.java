@@ -12,13 +12,13 @@ import lombok.Getter;
 public class PlayerResponse {
 
     @Schema(description = "PK of player", example = "3")
-    private Integer id;
+    private Long id;
 
     @Schema(description = "Member information")
     private MemberResponse member;
 
     @Schema(description = "PK of the game room that the player participating in", example = "2")
-    private Integer roomId;
+    private Long roomId;
 
     @Schema(description = "Weather or not the player is boss", example = "false")
     private Boolean isBoss;

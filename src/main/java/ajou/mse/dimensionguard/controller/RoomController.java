@@ -72,7 +72,7 @@ public class RoomController {
             @Parameter(
                     description = "PK of room",
                     example = "1"
-            ) @PathVariable Integer roomId
+            ) @PathVariable Long roomId
     ) {
         RoomDto roomDto = roomService.join(userPrincipal.getMemberId(), roomId);
         List<PlayerDto> players = roomDto.getPlayerDtos();
@@ -89,7 +89,7 @@ public class RoomController {
     )
     @GetMapping
     public WaitingRoomListResponse searchWaitingRoom() {
-        List<RoomCompactResponse> roomList = roomService.findAllByStatusReady().stream()
+        List<RoomCompactResponse> roomList = roomService.findAllDtosByStatusReady().stream()
                 .map(roomDto -> {
                     MemberDto host = memberService.findDtoById(roomDto.getCreatedBy());
                     return RoomCompactResponse.from(roomDto, host.getName());
@@ -113,7 +113,7 @@ public class RoomController {
             @Parameter(
                     description = "PK of room",
                     example = "1"
-            ) @PathVariable Integer roomId
+            ) @PathVariable Long roomId
     ) {
         return roomService.checkGameStarted(roomId);
     }
@@ -140,7 +140,7 @@ public class RoomController {
             @Parameter(
                     description = "PK of room",
                     example = "1"
-            ) @PathVariable Integer roomId
+            ) @PathVariable Long roomId
     ) {
         roomService.ready(userPrincipal.getMemberId(), roomId);
 

@@ -10,10 +10,10 @@ import lombok.Getter;
 public class PlayerCompactResponseWithReadyStatus {
 
     @Schema(description = "PK of player", example = "3")
-    private Integer id;
+    private Long id;
 
     @Schema(description = "PK of member", example = "1")
-    private Integer memberId;
+    private Long memberId;
 
     @Schema(description = "Nickname", example = "Woogie")
     private String name;

@@ -27,14 +27,14 @@ public class GameSyncService {
     private final EntityManager entityManager;
 
     @Transactional
-    public void increaseRequestCount(Integer roomId) {
+    public void increaseRequestCount(Long roomId) {
         InGameRequestStatus inGameRequestStatus = findInGameReqStatus(roomId);
         inGameRequestStatus.increaseRequestCount();
         inGameRequestStatusRepository.save(inGameRequestStatus);
     }
 
     @Transactional
-    public void initRequestCount(Integer roomId) {
+    public void initRequestCount(Long roomId) {
         InGameRequestStatus inGameRequestStatus = findInGameReqStatus(roomId);
         if (inGameRequestStatus.getCount() != 0) {
             inGameRequestStatus.initRequestCount();
@@ -42,8 +42,8 @@ public class GameSyncService {
         }
     }
 
-    public void waitUntilEveryoneIsReady(Integer roomId) {
-        Room room = roomService.findEntityById(roomId);
+    public void waitUntilEveryoneIsReady(Long roomId) {
+        Room room = roomService.findById(roomId);
 
         int count = 0;
         try {
@@ -58,8 +58,8 @@ public class GameSyncService {
         }
     }
 
-    public void waitUntilEveryoneRequest(Integer roomId) {
-        Room room = roomService.findEntityById(roomId);
+    public void waitUntilEveryoneRequest(Long roomId) {
+        Room room = roomService.findById(roomId);
         int numOfPlayers = room.getPlayers().size();
 
         int threadLoopCount = 0;
@@ -72,18 +72,18 @@ public class GameSyncService {
         }
     }
 
-    private InGameRequestStatus findInGameReqStatus(Integer roomId) {
+    private InGameRequestStatus findInGameReqStatus(Long roomId) {
         return inGameRequestStatusRepository.findById(roomId)
                 .orElseGet(() -> inGameRequestStatusRepository.save(new InGameRequestStatus(roomId)));
     }
 
     private boolean checkEveryoneIsReady(Room room) {
         entityManager.clear();
-        List<Player> players = playerService.findAllEntityByRoom(room);
+        List<Player> players = playerService.findAllByRoom(room);
         return players.stream().allMatch(Player::getIsReady);
     }
 
-    private boolean isEveryoneRequest(Integer roomId, Integer numOfPlayers) {
+    private boolean isEveryoneRequest(Long roomId, Integer numOfPlayers) {
         return this.findInGameReqStatus(roomId).getCount().equals(numOfPlayers);
     }
 }

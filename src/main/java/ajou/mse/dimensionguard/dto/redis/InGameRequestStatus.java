@@ -13,12 +13,12 @@ import static ajou.mse.dimensionguard.constant.ConstantUtil.IN_GAME_REQUEST_STAT
 public class InGameRequestStatus {
 
     @Id
-    private Integer roomId;
+    private Long roomId;
 
     @Setter(AccessLevel.PRIVATE)
     private Integer count;
 
-    public InGameRequestStatus(Integer roomId) {
+    public InGameRequestStatus(Long roomId) {
         this.roomId = roomId;
         this.count = 0;
     }
