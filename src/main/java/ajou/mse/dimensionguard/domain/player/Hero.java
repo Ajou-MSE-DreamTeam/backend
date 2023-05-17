@@ -35,11 +35,11 @@ public class Hero extends Player {
         return of(null, member, room, false, HERO_MAX_HP, HERO_MAX_ENERGY, null, null, null, null, null);
     }
 
-    public static Hero of(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public static Hero of(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new Hero(id, member, room, isReady, hp, energy, pos, damageDealt, motion, createdAt, updatedAt);
     }
 
-    private Hero(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Hero(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, LocalDateTime createdAt, LocalDateTime updatedAt) {
         super(id, member, room, isReady, hp, energy, createdAt, updatedAt);
         this.pos = pos;
         this.damageDealt = damageDealt;

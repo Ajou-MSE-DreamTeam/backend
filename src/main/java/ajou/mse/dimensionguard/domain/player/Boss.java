@@ -23,11 +23,11 @@ public class Boss extends Player {
         return of(null, member, room, false, BOSS_MAX_HP, BOSS_MAX_ENERGY, null, null);
     }
 
-    public static Boss of(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public static Boss of(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new Boss(id, member, room, isReady, hp, energy, createdAt, updatedAt);
     }
 
-    private Boss(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Boss(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         super(id, member, room, isReady, hp, energy, createdAt, updatedAt);
     }
 

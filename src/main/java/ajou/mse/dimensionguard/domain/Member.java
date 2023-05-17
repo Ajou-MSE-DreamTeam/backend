@@ -15,7 +15,7 @@ public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private Integer id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String accountId;
@@ -30,11 +30,11 @@ public class Member extends BaseTimeEntity {
         return of(null, accountId, password, name, null, null);
     }
 
-    public static Member of(Integer id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public static Member of(Long id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         return new Member(id, accountId, password, name, createdAt, updatedAt);
     }
 
-    private Member(Integer id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Member(Long id, String accountId, String password, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         super(createdAt, updatedAt);
         this.id = id;
         this.accountId = accountId;

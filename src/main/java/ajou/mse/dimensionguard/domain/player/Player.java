@@ -21,7 +21,7 @@ public abstract class Player extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
-    private Integer id;
+    private Long id;
 
     @JoinColumn(name = "member_id")
     @OneToOne(fetch = FetchType.LAZY)
@@ -56,7 +56,7 @@ public abstract class Player extends BaseTimeEntity {
         this.setEnergy(energy);
     }
 
-    protected Player(Integer id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    protected Player(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, LocalDateTime createdAt, LocalDateTime updatedAt) {
         super(createdAt, updatedAt);
         this.id = id;
         this.member = member;

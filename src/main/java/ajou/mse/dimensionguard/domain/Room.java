@@ -20,7 +20,7 @@ public class Room extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id")
-    private Integer id;
+    private Long id;
 
     @Setter(AccessLevel.PRIVATE)
     @Column(nullable = false)
@@ -37,11 +37,11 @@ public class Room extends BaseEntity {
         return of(null, RoomStatus.READY, null, null, null, null, null, null);
     }
 
-    public static Room of(Integer id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+    public static Room of(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
         return new Room(id, status, gameStartedAt, players, createdAt, updatedAt, createdBy, updatedBy);
     }
 
-    private Room(Integer id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
+    private Room(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy) {
         super(createdAt, updatedAt, createdBy, updatedBy);
         this.id = id;
         this.status = status;
