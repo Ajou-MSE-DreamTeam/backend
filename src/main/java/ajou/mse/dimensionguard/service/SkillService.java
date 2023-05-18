@@ -17,23 +17,37 @@ public class SkillService {
     private final RedisSkillInfoRepository redisSkillInfoRepository;
 
     @Transactional
-    public void addSkill(Long roomId, SkillDto skill) {
-        RedisSkillInfo redisSkillInfo = new RedisSkillInfo(roomId, skill.getNum(), skill.getPos());
-        redisSkillInfoRepository.save(redisSkillInfo);
+    public RedisSkillInfo saveToRedis(RedisSkillInfo redisSkillInfo) {
+        return redisSkillInfoRepository.save(redisSkillInfo);
     }
 
-    public SkillDto getSkillUsed(Long roomId) {
-        Optional<RedisSkillInfo> optSkillInfo = redisSkillInfoRepository.findById(roomId);
-
-        if (optSkillInfo.isEmpty()) {
-            return null;
+    public void addSkill(Long roomId, SkillDto skill) {
+        RedisSkillInfo redisSkillInfo;
+        if (isSkillUsed(skill)) {
+            redisSkillInfo = new RedisSkillInfo(roomId, skill.getNum(), skill.getPos(), false);
+        } else {
+            Optional<RedisSkillInfo> optSkillInfo = findOptById(roomId);
+            redisSkillInfo = optSkillInfo.map(skillInfo -> new RedisSkillInfo(roomId, skill.getNum(), skill.getPos(), skillInfo.getIsHit()))
+                    .orElseGet(() -> new RedisSkillInfo(roomId, skill.getNum(), skill.getPos(), false));
         }
+        saveToRedis(redisSkillInfo);
+    }
 
-        RedisSkillInfo redisSkillInfo = optSkillInfo.get();
-        if (redisSkillInfo.getNum() < 0) {
-            return null;
-        }
+    public RedisSkillInfo findById(Long roomId) {
+        return redisSkillInfoRepository.findById(roomId)
+                .orElseGet(() -> saveToRedis(new RedisSkillInfo(roomId, 0, null, true)));   // Dummy data 저장. Dummy data에 의해 skill 적중 수가 늘어나지 않도록 true로 초기화
+    }
 
-        return SkillDto.from(redisSkillInfo);
+    private Optional<RedisSkillInfo> findOptById(Long roomId) {
+        return redisSkillInfoRepository.findById(roomId);
+    }
+
+    public SkillDto findDtoById(Long roomId) {
+        Optional<RedisSkillInfo> optSkillInfo = findOptById(roomId);
+        return optSkillInfo.map(SkillDto::from).orElse(null);
+    }
+
+    private static boolean isSkillUsed(SkillDto skill) {
+        return skill.getNum() > 0;
     }
 }

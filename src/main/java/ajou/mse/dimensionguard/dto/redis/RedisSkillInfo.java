@@ -20,12 +20,15 @@ public class RedisSkillInfo {
 
     private Position pos;
 
+    private Boolean isHit;
+
     private LocalDateTime createdAt;
 
-    public RedisSkillInfo(Long roomId, Integer num, Position pos) {
+    public RedisSkillInfo(Long roomId, Integer num, Position pos, Boolean isHit) {
         this.roomId = roomId;
         this.num = num;
         this.pos = pos;
+        this.isHit = isHit;
         this.createdAt = LocalDateTime.now();
     }
 }

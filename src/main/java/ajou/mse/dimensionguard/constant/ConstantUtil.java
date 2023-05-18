@@ -6,13 +6,16 @@ import ajou.mse.dimensionguard.service.GameSyncService;
 
 public class ConstantUtil {
 
+    private static final int MINUTE = 60;
+    private static final int HOUR = 60 * MINUTE;
+
     /**
      * Player 관련
      */
     public static final int BOSS_MAX_HP = 100;
     public static final int BOSS_MAX_ENERGY = 100;
-    public static final int HERO_MAX_HP = 10;
-    public static final int HERO_MAX_ENERGY = 10;
+    public static final int HERO_MAX_HP = 100;
+    public static final int HERO_MAX_ENERGY = 100;
 
     /**
      * <p>Sync 관련
@@ -33,5 +36,5 @@ public class ConstantUtil {
      * <p>{@link InGameRequestStatus}, {@link RedisSkillInfo}
      */
     public static final int IN_GAME_REQUEST_STATUS_TIMEOUT = 2;     // Must be greater than the time(sec) to wait for all requests(WAITING_COUNT_FOR_REQUEST * SLEEP_MILLIS_FOR_REQUEST)
-    public static final int SKILL_INFO_TIMEOUT = 2;    // Must be greater than the time(sec) to wait for all requests
+    public static final int SKILL_INFO_TIMEOUT = HOUR;    // Must be greater than the time(sec) to wait for all requests
 }
