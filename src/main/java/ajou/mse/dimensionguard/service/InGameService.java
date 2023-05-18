@@ -3,8 +3,8 @@ package ajou.mse.dimensionguard.service;
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Boss;
 import ajou.mse.dimensionguard.domain.player.Hero;
-import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.SkillDto;
+import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
 import ajou.mse.dimensionguard.dto.player.response.PlayerResponse;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
@@ -26,7 +26,6 @@ public class InGameService {
     @Transactional
     public void updateInGameData(Long loginMemberId, PlayerInGameRequest request) {
         if (request.getIsBoss()) {
-            skillService.clear();
             Room room = roomService.findByMemberId(loginMemberId);
             skillService.addSkill(room.getId(), request.getSkillUsed());
         } else {
@@ -51,10 +50,7 @@ public class InGameService {
 
     public InGameResponse getInGameData(Long roomId) {
         RoomDto roomDto = roomService.findDtoById(roomId);
-
-        int numOfPlayers = roomDto.getPlayerDtos().size();
-        SkillDto skillUsed = skillService.getSkillUsed(roomId, numOfPlayers);
-
+        SkillDto skillUsed = skillService.getSkillUsed(roomId);
         return new InGameResponse(
                 skillUsed,
                 roomDto.getPlayerDtos().stream()

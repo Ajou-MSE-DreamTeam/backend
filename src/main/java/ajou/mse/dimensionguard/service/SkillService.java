@@ -22,28 +22,18 @@ public class SkillService {
         redisSkillInfoRepository.save(redisSkillInfo);
     }
 
-    @Transactional
-    public SkillDto getSkillUsed(Long roomId, Integer numOfPlayers) {
-        Optional<RedisSkillInfo> optionalSkillInfo = redisSkillInfoRepository.findById(roomId);
+    public SkillDto getSkillUsed(Long roomId) {
+        Optional<RedisSkillInfo> optSkillInfo = redisSkillInfoRepository.findById(roomId);
 
-        if (optionalSkillInfo.isEmpty()) {
+        if (optSkillInfo.isEmpty()) {
             return null;
         }
 
-        RedisSkillInfo redisSkillInfo = optionalSkillInfo.get();
-        redisSkillInfo.increaseDeliveredCount();
-        redisSkillInfoRepository.save(redisSkillInfo);
-
-        RedisSkillInfo updatedRedisSkillInfo = redisSkillInfoRepository.findById(roomId).orElseThrow();
-        if (updatedRedisSkillInfo.getDeliveredCount().equals(numOfPlayers)) {
-            redisSkillInfoRepository.deleteById(roomId);
+        RedisSkillInfo redisSkillInfo = optSkillInfo.get();
+        if (redisSkillInfo.getNum() < 0) {
+            return null;
         }
 
         return SkillDto.from(redisSkillInfo);
-    }
-
-    @Transactional
-    public void clear() {
-        redisSkillInfoRepository.deleteAll();
     }
 }
