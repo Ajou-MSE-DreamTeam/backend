@@ -30,6 +30,12 @@ public class InGameService {
             skillService.addSkill(room.getId(), request.getSkillUsed());
         } else {
             Hero hero = (Hero) playerService.findByMemberId(loginMemberId);
+
+            int damageTaken = hero.getHp() - request.getHp();
+            if (damageTaken > 0) {
+                hero.addTotalDamageTaken(damageTaken);
+            }
+
             hero.update(
                     request.getHp(),
                     request.getEnergy(),
@@ -39,12 +45,14 @@ public class InGameService {
             );
 
             Room room = hero.getRoom();
-
             Optional<Boss> optionalBoss = room.getPlayers().stream()
                     .filter(player -> player instanceof Boss)
                     .findFirst()
                     .map(Boss.class::cast);
-            optionalBoss.ifPresent(boss -> boss.decreaseHp(request.getDamageDealt()));
+            optionalBoss.ifPresent(boss -> {
+                hero.addTotalDamageDealt(hero.getDamageDealt());
+                boss.decreaseHp(hero.getDamageDealt());
+            });
         }
     }
 
