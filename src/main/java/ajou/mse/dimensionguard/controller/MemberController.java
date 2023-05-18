@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @Tag(name = "회원(유저)")
@@ -36,7 +37,7 @@ public class MemberController {
                     responseCode = "409", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<MemberResponse> signUp(@RequestBody SignUpRequest request) {
+    public ResponseEntity<MemberResponse> signUp(@Valid @RequestBody SignUpRequest request) {
         MemberDto savedMember = memberService.save(request);
         return ResponseEntity
                 .created(URI.create("/api/members/" + savedMember.getId()))

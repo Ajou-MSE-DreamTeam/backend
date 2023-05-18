@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static ajou.mse.dimensionguard.constant.ConstantUtil.SLEEP_MILLIS_BEFORE_REQ_COUNT_RESET;
 
 @Tag(name = "In-game related")
@@ -41,7 +43,7 @@ public class InGameController {
     @PostMapping
     public InGameResponse update(
             @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
-            @RequestBody PlayerInGameRequest inGameRequest
+            @Valid @RequestBody PlayerInGameRequest inGameRequest
     ) throws InterruptedException {
         Long loginMemberId = userPrincipal.getMemberId();
 

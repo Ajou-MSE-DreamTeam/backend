@@ -108,7 +108,6 @@ public class RoomController {
             @ApiResponse(description = "[2500] The room cannot be found because the host has left the room, the room is dissolved, etc.", responseCode = "404", content = @Content)
     })
     @GetMapping("/{roomId}/start")
-
     public CheckGameStartResponse checkGameStarted(
             @Parameter(
                     description = "PK of room",
