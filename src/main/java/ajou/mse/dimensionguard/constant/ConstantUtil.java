@@ -26,12 +26,12 @@ public class ConstantUtil {
     public static final int WAITING_COUNT_FOR_REQUEST = 24;
     public static final int SLEEP_MILLIS_FOR_REQUEST = 25;
 
-    public static final int SLEEP_MILLIS_BEFORE_REQ_COUNT_RESET = 50;
+    public static final int SLEEP_MILLIS_BEFORE_REQ_COUNT_RESET = 50;   // Must be greater than SLEEP_MILLIS_FOR_REQUEST
 
     /**
      * <p>Redis time to live
      * <p>{@link InGameRequestStatus}, {@link RedisSkillInfo}
      */
-    public static final int IN_GAME_REQUEST_STATUS_TIMEOUT = 2;
-    public static final int SKILL_INFO_TIMEOUT = 2;
+    public static final int IN_GAME_REQUEST_STATUS_TIMEOUT = 2;     // Must be greater than the time(sec) to wait for all requests(WAITING_COUNT_FOR_REQUEST * SLEEP_MILLIS_FOR_REQUEST)
+    public static final int SKILL_INFO_TIMEOUT = 2;    // Must be greater than the time(sec) to wait for all requests
 }
