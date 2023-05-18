@@ -34,19 +34,18 @@ public class Room extends BaseEntity {
     private List<Player> players = new LinkedList<>();
 
     public static Room of() {
-        return of(null, RoomStatus.READY, null, null, null, null, null, null);
+        return of(null, RoomStatus.READY, null, null, null, null, null);
     }
 
-    public static Room of(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
-        return new Room(id, status, gameStartedAt, players, createdAt, updatedAt, createdBy, updatedBy);
+    public static Room of(Long id, RoomStatus status, LocalDateTime gameStartedAt, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
+        return new Room(id, status, gameStartedAt, createdAt, updatedAt, createdBy, updatedBy);
     }
 
-    private Room(Long id, RoomStatus status, LocalDateTime gameStartedAt, List<Player> players, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
+    private Room(Long id, RoomStatus status, LocalDateTime gameStartedAt, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy) {
         super(createdAt, updatedAt, createdBy, updatedBy);
         this.id = id;
         this.status = status;
         this.gameStartedAt = gameStartedAt;
-        this.players = players;
     }
 
     public void init() {
