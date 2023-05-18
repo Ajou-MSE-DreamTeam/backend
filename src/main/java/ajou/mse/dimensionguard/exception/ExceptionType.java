@@ -111,6 +111,7 @@ public enum ExceptionType {
     EVERYONE_NOT_READY(2502, "참가자들의 준비를 기다렸으나, 참가자 전원의 준비가 되지 않았습니다.", EveryoneNotReadyException.class),
     ALREADY_PARTICIPATING(2503, "이미 다른 방에 참여중입니다. 참여중인 방에서 나간 후 다시 시도해주세요.", AlreadyParticipatingException.class),
     ROOM_NOT_FOUND_BY_MEMBER_ID(2504, "게임 방을 찾을 수 없습니다. 방이 해산됐거나 게임이 종료되었을 수 있습니다.", RoomNotFoundByMemberIdException.class),
+    NO_BOSS(2505, "게임 룸에서 보스를 찾을 수 없습니다.", NoBossException.class),
 
     /**
      * 플레이어({@link Player}) 관련 예외
