@@ -22,9 +22,9 @@ public class ConstantUtil {
     public static final int WAITING_COUNT_FOR_READY = 30;
     public static final int SLEEP_MILLIS_FOR_READY = 500;
 
-    // Wait until everyone request. 최대 0.7sec.
-    public static final int WAITING_COUNT_FOR_REQUEST = 24;
-    public static final int SLEEP_MILLIS_FOR_REQUEST = 25;
+    // Wait until everyone request. 최대 0.5sec.
+    public static final int WAITING_COUNT_FOR_REQUEST = 25;
+    public static final int SLEEP_MILLIS_FOR_REQUEST = 20;
 
     public static final int SLEEP_MILLIS_BEFORE_REQ_COUNT_RESET = 50;   // Must be greater than SLEEP_MILLIS_FOR_REQUEST
 
