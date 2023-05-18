@@ -1,7 +1,7 @@
 package ajou.mse.dimensionguard.dto.in_game;
 
 import ajou.mse.dimensionguard.domain.player.Position;
-import ajou.mse.dimensionguard.dto.redis.RedisSkillInfo;
+import ajou.mse.dimensionguard.dto.redis.Skill;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class SkillDto {
     @NotNull
     private Position pos;
 
-    public static SkillDto from(RedisSkillInfo skillInfo) {
+    public static SkillDto from(Skill skillInfo) {
         return new SkillDto(skillInfo.getNum(), skillInfo.getPos());
     }
 }

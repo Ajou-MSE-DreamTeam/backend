@@ -7,7 +7,7 @@ import ajou.mse.dimensionguard.dto.in_game.SkillDto;
 import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
 import ajou.mse.dimensionguard.dto.player.response.PlayerResponse;
-import ajou.mse.dimensionguard.dto.redis.RedisSkillInfo;
+import ajou.mse.dimensionguard.dto.redis.Skill;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.exception.room.NoBossException;
 import lombok.RequiredArgsConstructor;
@@ -99,14 +99,14 @@ public class InGameService {
     }
 
     private void checkSkillHit(Long roomId, Boss boss) {
-        RedisSkillInfo skill = skillService.findById(roomId);
+        Skill skill = skillService.findById(roomId);
         if (isFirstHit(skill)) {
-            skillService.saveToRedis(new RedisSkillInfo(skill.getRoomId(), skill.getNum(), skill.getPos(), true));
+            skillService.saveToRedis(new Skill(skill.getRoomId(), skill.getNum(), skill.getPos(), true));
             boss.increaseNumOfSkillHit();
         }
     }
 
-    private boolean isFirstHit(RedisSkillInfo skill) {
+    private boolean isFirstHit(Skill skill) {
         return !skill.getIsHit();
     }
 }

@@ -11,7 +11,7 @@ import static ajou.mse.dimensionguard.constant.ConstantUtil.SKILL_INFO_TIMEOUT;
 
 @Getter
 @RedisHash(value = "skill", timeToLive = SKILL_INFO_TIMEOUT)
-public class RedisSkillInfo {
+public class Skill {
 
     @Id
     private Long roomId;
@@ -24,7 +24,7 @@ public class RedisSkillInfo {
 
     private LocalDateTime createdAt;
 
-    public RedisSkillInfo(Long roomId, Integer num, Position pos, Boolean isHit) {
+    public Skill(Long roomId, Integer num, Position pos, Boolean isHit) {
         this.roomId = roomId;
         this.num = num;
         this.pos = pos;
