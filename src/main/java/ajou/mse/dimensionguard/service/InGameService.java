@@ -21,14 +21,14 @@ public class InGameService {
 
     private final PlayerService playerService;
     private final RoomService roomService;
-    private final BossSkillService bossSkillService;
+    private final SkillService skillService;
 
     @Transactional
     public void updateInGameData(Long loginMemberId, PlayerInGameRequest request) {
         if (request.getIsBoss()) {
-            bossSkillService.clear();
+            skillService.clear();
             Room room = roomService.findByMemberId(loginMemberId);
-            bossSkillService.addSkill(room.getId(), request.getSkillUsed());
+            skillService.addSkill(room.getId(), request.getSkillUsed());
         } else {
             Hero hero = (Hero) playerService.findByMemberId(loginMemberId);
             hero.update(
@@ -53,7 +53,7 @@ public class InGameService {
         RoomDto roomDto = roomService.findDtoById(roomId);
 
         int numOfPlayers = roomDto.getPlayerDtos().size();
-        SkillDto skillUsed = bossSkillService.getSkillUsed(roomId, numOfPlayers);
+        SkillDto skillUsed = skillService.getSkillUsed(roomId, numOfPlayers);
 
         return new InGameResponse(
                 skillUsed,

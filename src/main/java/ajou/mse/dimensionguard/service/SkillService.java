@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class BossSkillService {
+public class SkillService {
 
     private final RedisSkillInfoRepository redisSkillInfoRepository;
 
