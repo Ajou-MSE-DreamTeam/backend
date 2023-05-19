@@ -36,7 +36,7 @@ public class Hero extends Player {
     private Integer totalDamageTaken;
 
     public static Hero of(Member member, Room room) {
-        return of(null, member, room, false, HERO_MAX_HP, HERO_MAX_ENERGY, null, null, null, 0, 0, null, null);
+        return of(null, member, room, false, HERO_MAX_HP, HERO_MAX_ENERGY, null, 0, 0, 0, 0, null, null);
     }
 
     public static Hero of(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, Integer totalDamageDealt, Integer totalDamageTaken, LocalDateTime createdAt, LocalDateTime updatedAt) {
