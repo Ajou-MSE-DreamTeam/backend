@@ -18,6 +18,12 @@ public class ConstantUtil {
     public static final int HERO_MAX_ENERGY = 100;
 
     /**
+     * 보스 스킬 특정 상태값
+     */
+    public static final int SKILL_UNUSED = 0;
+    public static final int SKILL_USING = -1;
+
+    /**
      * <p>Sync 관련
      * <p>{@link GameSyncService}
      */

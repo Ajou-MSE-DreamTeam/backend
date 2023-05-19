@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static ajou.mse.dimensionguard.constant.ConstantUtil.SKILL_UNUSED;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -35,7 +37,7 @@ public class SkillService {
 
     public Skill findById(Long roomId) {
         return skillRepository.findById(roomId)
-                .orElseGet(() -> saveToRedis(new Skill(roomId, 0, null, true)));   // Dummy data 저장. Dummy data에 의해 skill 적중 수가 늘어나지 않도록 true로 초기화
+                .orElseGet(() -> saveToRedis(new Skill(roomId, SKILL_UNUSED, null, true)));   // Dummy data 저장. Dummy data에 의해 skill 적중 수가 늘어나지 않도록 true로 초기화
     }
 
     private Optional<Skill> findOptById(Long roomId) {

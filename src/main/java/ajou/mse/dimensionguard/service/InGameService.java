@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static ajou.mse.dimensionguard.constant.ConstantUtil.SKILL_USING;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -75,14 +77,14 @@ public class InGameService {
     }
 
     private void countNumOfSkillUsed(SkillDto skill, Room room) {
-        if (isSkillUsed(skill)) {
+        if (isSkillUsedNow(skill.getNum())) {
             Boss boss = getBossFromRoom(room);
             boss.increaseNumOfSkillUsed();
         }
     }
 
-    private boolean isSkillUsed(SkillDto skill) {
-        return skill.getNum() > 0;
+    private boolean isSkillUsedNow(int skillNum) {
+        return skillNum > 0;
     }
 
     private void hitToBoss(Hero hero, Boss boss) {
@@ -100,7 +102,7 @@ public class InGameService {
 
     private void checkSkillHit(Long roomId, Boss boss) {
         Skill skill = skillService.findById(roomId);
-        if (isFirstHit(skill)) {
+        if (isFirstHit(skill) && isSkillUsed(skill.getNum())) {
             skillService.saveToRedis(new Skill(skill.getRoomId(), skill.getNum(), skill.getPos(), true));
             boss.increaseNumOfSkillHit();
         }
@@ -108,5 +110,13 @@ public class InGameService {
 
     private boolean isFirstHit(Skill skill) {
         return !skill.getIsHit();
+    }
+
+    private boolean isSkillUsing(int skillNum) {
+        return skillNum == SKILL_USING;
+    }
+
+    private boolean isSkillUsed(int skillNum) {
+        return isSkillUsedNow(skillNum) || isSkillUsing(skillNum);
     }
 }
