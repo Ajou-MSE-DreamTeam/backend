@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -32,10 +31,8 @@ public class Hero extends Player {
     @Setter(AccessLevel.PRIVATE)
     private Integer motion;
 
-    @Column(nullable = false)
     private Integer totalDamageDealt;
 
-    @Column(nullable = false)
     private Integer totalDamageTaken;
 
     public static Hero of(Member member, Room room) {

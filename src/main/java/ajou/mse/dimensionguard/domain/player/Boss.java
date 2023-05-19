@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
@@ -20,10 +19,8 @@ import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_MAX_HP;
 @Entity
 public class Boss extends Player {
 
-    @Column(nullable = false)
     private Integer numOfSkillUsed;
 
-    @Column(nullable = false)
     private Integer numOfSkillHit;
 
     public static Boss of(Member member, Room room) {
