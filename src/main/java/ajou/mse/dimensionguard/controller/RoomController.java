@@ -46,9 +46,7 @@ public class RoomController {
             @ApiResponse(description = "[2503] If you are already joining another room and need to retry after leaving the room you are joining", responseCode = "409", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<RoomResponseWithPlayerStatus> create(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal
-    ) {
+    public ResponseEntity<RoomResponseWithPlayerStatus> create(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         RoomDto roomDto = roomService.createRoom(userPrincipal.getMemberId());
 
         return ResponseEntity
@@ -68,7 +66,7 @@ public class RoomController {
     })
     @PostMapping("/{roomId}/join")
     public ResponseEntity<RoomResponseWithPlayerStatus> join(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
                     example = "1"
@@ -135,7 +133,7 @@ public class RoomController {
     })
     @PatchMapping("/{roomId}/ready")
     public RoomResponse ready(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Parameter(
                     description = "PK of room",
                     example = "1"

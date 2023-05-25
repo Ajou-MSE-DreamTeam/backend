@@ -46,7 +46,7 @@ public class InGameController {
     )
     @PostMapping
     public InGameResponse update(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
             @Valid @RequestBody PlayerInGameRequest inGameRequest
     ) throws InterruptedException {
         Long loginMemberId = userPrincipal.getMemberId();
