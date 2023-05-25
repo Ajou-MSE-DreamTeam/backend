@@ -25,7 +25,7 @@ public class SkillService {
 
     public void addSkill(Long roomId, SkillDto skillDto) {
         Skill skill;
-        if (isSkillUsed(skillDto)) {
+        if (isSkillUsedNow(skillDto)) {
             skill = new Skill(roomId, skillDto.getNum(), skillDto.getPos(), false);
         } else {
             Optional<Skill> optSkillInfo = findOptById(roomId);
@@ -49,7 +49,7 @@ public class SkillService {
         return optSkillInfo.map(SkillDto::from).orElse(null);
     }
 
-    private static boolean isSkillUsed(SkillDto skill) {
+    private static boolean isSkillUsedNow(SkillDto skill) {
         return skill.getNum() > 0;
     }
 }
