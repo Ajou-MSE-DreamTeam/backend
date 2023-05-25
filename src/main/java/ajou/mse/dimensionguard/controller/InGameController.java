@@ -1,10 +1,13 @@
 package ajou.mse.dimensionguard.controller;
 
+import ajou.mse.dimensionguard.constant.GameResult;
 import ajou.mse.dimensionguard.dto.in_game.request.PlayerInGameRequest;
 import ajou.mse.dimensionguard.dto.in_game.response.InGameResponse;
+import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.service.GameSyncService;
 import ajou.mse.dimensionguard.service.InGameService;
+import ajou.mse.dimensionguard.service.RecordService;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,6 +33,7 @@ public class InGameController {
     private final RoomService roomService;
     private final InGameService inGameService;
     private final GameSyncService gameSyncService;
+    private final RecordService recordService;
 
     @Operation(
             summary = "Update in-game data",
@@ -60,6 +64,16 @@ public class InGameController {
         }
 
         // 새롭게 갱신된 모든 player들의 정보 조회
-        return inGameService.getInGameData(roomId);
+        InGameResponse inGameData = inGameService.getInGameData(roomId);
+
+        // 게임이 종료되었는지 확인
+        GameResult gameResult = inGameService.isGameEnded(roomId);
+        if (gameResult != GameResult.NOT_END) {
+            RoomDto roomDto = roomService.findDtoById(roomId);
+            recordService.record(roomDto, gameResult);
+            roomService.deleteWithPlayers(roomId);
+        }
+
+        return inGameData;
     }
 }

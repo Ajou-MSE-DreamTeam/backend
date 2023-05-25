@@ -1,5 +1,6 @@
 package ajou.mse.dimensionguard.service;
 
+import ajou.mse.dimensionguard.constant.GameResult;
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Boss;
 import ajou.mse.dimensionguard.domain.player.Hero;
@@ -43,6 +44,27 @@ public class InGameService {
                         .map(PlayerResponse::from)
                         .toList()
         );
+    }
+
+    public GameResult isGameEnded(Long roomId) {
+        Room room = roomService.findById(roomId);
+
+        // 모든 hero들의 hp가 0이거나
+        long count = room.getPlayers().stream()
+                .filter(player -> player instanceof Hero)
+                .filter(player -> player.getHp() != 0)
+                .count();
+        if (count <= 0) {
+            return GameResult.BOSS_WIN;
+        }
+
+        // boss의 hp가 0이하라면 return true
+        Boss boss = getBossFromRoom(room);
+        if (boss.getHp() <= 0) {
+            return GameResult.HERO_WIN;
+        }
+
+        return GameResult.NOT_END;
     }
 
     private void updateInGameDataForBoss(Long loginMemberId, PlayerInGameRequest request) {
