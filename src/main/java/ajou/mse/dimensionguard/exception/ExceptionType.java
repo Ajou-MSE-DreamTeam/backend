@@ -12,6 +12,7 @@ import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.exception.member.MemberNameDuplicateException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberIdException;
+import ajou.mse.dimensionguard.exception.record.RecordNotFoundByRoomIdException;
 import ajou.mse.dimensionguard.exception.room.*;
 import ajou.mse.dimensionguard.log.LogUtils;
 import lombok.AccessLevel;
@@ -48,6 +49,7 @@ import java.util.Optional;
  *     <li>2000 ~ 2499: 회원({@link Member}) 관련 예외</li>
  *     <li>2500 ~ 2999: 게임 룸({@link Room}) 관련 예외</li>
  *     <li>3000 ~ 3399: 플레이어({@link Player}) 관련 예외</li>
+ *     <li>3400 ~ 3699: 기록({@link Record}) 관련 예외</li>
  * </ul>
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -118,6 +120,11 @@ public enum ExceptionType {
      */
     PLAYER_NOT_FOUND_BY_MEMBER_AND_ROOM(3000, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberAndRoomException.class),
     PLAYER_NOT_FOUND_BY_MEMBER(3001, "플레이어를 찾을 수 없습니다.", PlayerNotFoundByMemberIdException.class),
+
+    /**
+     * 기록({@link Record}) 관련 예외
+     */
+    RECORD_NOT_FOUND_BY_ROOM_ID(3400, "게임 기록을 찾을 수 없습니다.", RecordNotFoundByRoomIdException.class),
     ;
 
     private final Integer code;

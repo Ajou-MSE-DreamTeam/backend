@@ -105,6 +105,13 @@ public class RoomService {
         }
     }
 
+    @Transactional
+    public void deleteWithPlayers(Long roomId) {
+        Room room = findById(roomId);
+        playerService.deleteAll(room.getPlayers());
+        roomRepository.delete(room);
+    }
+
     private void validateAlreadyParticipating(Long loginMemberId) {
         Optional<Player> optionalPlayer = playerService.findOptByMemberId(loginMemberId);
         if (optionalPlayer.isPresent()) {
