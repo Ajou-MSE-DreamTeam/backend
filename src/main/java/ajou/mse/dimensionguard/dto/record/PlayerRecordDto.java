@@ -12,6 +12,7 @@ public class PlayerRecordDto {
     private Long id;
     private MemberDto memberDto;
     private Long recordId;
+    private Boolean isBoss;
     private Integer totalDamageDealt;
     private Integer totalDamageTaken;
     private Integer numOfSkillUsed;
@@ -22,6 +23,7 @@ public class PlayerRecordDto {
                 entity.getId(),
                 MemberDto.from(entity.getMember()),
                 entity.getRecord().getId(),
+                entity.getIsBoss(),
                 entity.getTotalDamageDealt(),
                 entity.getTotalDamageTaken(),
                 entity.getNumOfSkillUsed(),

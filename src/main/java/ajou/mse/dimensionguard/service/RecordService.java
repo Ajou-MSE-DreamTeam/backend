@@ -51,4 +51,12 @@ public class RecordService {
 
         return RecordDto.from(record);
     }
+
+    public RecordDto findDtoByRoomId(Long roomId) {
+        return RecordDto.from(findByRoomId(roomId));
+    }
+
+    private Record findByRoomId(Long roomId) {
+        return recordRepository.findByRoomId(roomId).orElseThrow(() -> new RecordNotFoundByRoomIdException(roomId));
+    }
 }
