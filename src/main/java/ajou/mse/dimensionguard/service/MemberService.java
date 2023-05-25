@@ -3,10 +3,12 @@ package ajou.mse.dimensionguard.service;
 import ajou.mse.dimensionguard.domain.Member;
 import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
+import ajou.mse.dimensionguard.dto.member.response.MemberStatisticsResponse;
 import ajou.mse.dimensionguard.exception.member.AccountIdDuplicateException;
 import ajou.mse.dimensionguard.exception.member.MemberIdNotFoundException;
 import ajou.mse.dimensionguard.exception.member.MemberNameDuplicateException;
 import ajou.mse.dimensionguard.repository.MemberRepository;
+import ajou.mse.dimensionguard.repository.record.PlayerRecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PlayerRecordRepository playerRecordRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -44,6 +47,15 @@ public class MemberService {
     public Optional<MemberDto> findOptDtoByAccountId(String accountId) {
         return memberRepository.findByAccountId(accountId)
                 .map(MemberDto::from);
+    }
+
+    public MemberStatisticsResponse getStatistics(Long memberId) {
+        Long numOfGames = playerRecordRepository.countByMember_Id(memberId);
+        Long numOfBosses = playerRecordRepository.countByMember_IdAndIsBoss(memberId, true);
+        Long numOfHeroes = numOfGames - numOfBosses;
+        Long numOfBossWins = playerRecordRepository.countGamesWon(memberId, true);
+        Long numOfHeroWins = playerRecordRepository.countGamesWon(memberId, false);
+        return new MemberStatisticsResponse(numOfGames, numOfBosses, numOfBossWins, numOfHeroes, numOfHeroWins);
     }
 
     public boolean existsByAccountId(String accountId) {

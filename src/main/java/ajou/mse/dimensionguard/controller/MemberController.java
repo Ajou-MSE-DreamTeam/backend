@@ -4,21 +4,26 @@ import ajou.mse.dimensionguard.dto.member.MemberDto;
 import ajou.mse.dimensionguard.dto.member.request.SignUpRequest;
 import ajou.mse.dimensionguard.dto.member.response.ExistenceResponse;
 import ajou.mse.dimensionguard.dto.member.response.MemberResponse;
+import ajou.mse.dimensionguard.dto.member.response.MemberStatisticsResponse;
+import ajou.mse.dimensionguard.security.UserPrincipal;
 import ajou.mse.dimensionguard.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 
-@Tag(name = "회원(유저)")
+@Tag(name = "Member(User)")
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
 @RestController
@@ -62,5 +67,16 @@ public class MemberController {
     @GetMapping("/name/existence")
     public ExistenceResponse checkMemberNameExistence(@RequestParam String name) {
         return new ExistenceResponse(memberService.existsByName(name));
+    }
+
+    @Operation(
+            summary = "Get a member's game statistics.",
+            description = "<p>Get a login member's game statistics." +
+                    "<p>The statistics include the total number of games played and the total number of games won.",
+            security = @SecurityRequirement(name = "access-token")
+    )
+    @GetMapping("/statistics")
+    public MemberStatisticsResponse getGameStatistics(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        return memberService.getStatistics(userPrincipal.getMemberId());
     }
 }
