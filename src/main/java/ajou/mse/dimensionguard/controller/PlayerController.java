@@ -28,7 +28,7 @@ public class PlayerController {
             security = @SecurityRequirement(name = "access-token")
     )
     @DeleteMapping
-    public void exit(@Parameter(hidden = true) @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public void exit(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         playerService.exit(userPrincipal.getMemberId());
     }
 }
