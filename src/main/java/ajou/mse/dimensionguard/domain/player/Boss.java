@@ -10,8 +10,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
-import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_MAX_ENERGY;
-import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_MAX_HP;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_DEFAULT_ENERGY;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.BOSS_DEFAULT_HP;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -24,7 +24,7 @@ public class Boss extends Player {
     private Integer numOfSkillHit;
 
     public static Boss of(Member member, Room room) {
-        return of(null, member, room, false, BOSS_MAX_HP, BOSS_MAX_ENERGY, 0, 0, null, null);
+        return of(null, member, room, false, BOSS_DEFAULT_HP, BOSS_DEFAULT_ENERGY, 0, 0, null, null);
     }
 
     public static Boss of(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Integer numOfSkillUsed, Integer numOfSkillHit, LocalDateTime createdAt, LocalDateTime updatedAt) {

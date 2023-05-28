@@ -12,8 +12,8 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
-import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_MAX_ENERGY;
-import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_MAX_HP;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_DEFAULT_ENERGY;
+import static ajou.mse.dimensionguard.constant.ConstantUtil.HERO_DEFAULT_HP;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -36,7 +36,7 @@ public class Hero extends Player {
     private Integer totalDamageTaken;
 
     public static Hero of(Member member, Room room) {
-        return of(null, member, room, false, HERO_MAX_HP, HERO_MAX_ENERGY, null, 0, 0, 0, 0, null, null);
+        return of(null, member, room, false, HERO_DEFAULT_HP, HERO_DEFAULT_ENERGY, null, 0, 0, 0, 0, null, null);
     }
 
     public static Hero of(Long id, Member member, Room room, Boolean isReady, Integer hp, Integer energy, Position pos, Integer damageDealt, Integer motion, Integer totalDamageDealt, Integer totalDamageTaken, LocalDateTime createdAt, LocalDateTime updatedAt) {
