@@ -37,6 +37,10 @@ public class Boss extends Player {
         this.numOfSkillHit = numOfSkillHit;
     }
 
+    public void initHp(int numOfPlayers) {
+        this.setHp(BOSS_DEFAULT_HP * numOfPlayers);
+    }
+
     public void decreaseHp(Integer damageDealt) {
         this.setHp(this.getHp() - damageDealt);
     }

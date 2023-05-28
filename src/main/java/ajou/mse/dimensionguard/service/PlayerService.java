@@ -4,7 +4,7 @@ import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberAndRoomException;
 import ajou.mse.dimensionguard.exception.player.PlayerNotFoundByMemberIdException;
-import ajou.mse.dimensionguard.repository.PlayerRepository;
+import ajou.mse.dimensionguard.repository.player.PlayerRepository;
 import ajou.mse.dimensionguard.repository.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

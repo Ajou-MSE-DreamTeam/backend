@@ -1,4 +1,4 @@
-package ajou.mse.dimensionguard.repository;
+package ajou.mse.dimensionguard.repository.player;
 
 import ajou.mse.dimensionguard.domain.Room;
 import ajou.mse.dimensionguard.domain.player.Player;
