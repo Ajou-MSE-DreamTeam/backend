@@ -12,10 +12,10 @@ public class ConstantUtil {
     /**
      * Player 관련
      */
-    public static final int BOSS_MAX_HP = 100;
-    public static final int BOSS_MAX_ENERGY = 100;
-    public static final int HERO_MAX_HP = 100;
-    public static final int HERO_MAX_ENERGY = 100;
+    public static final int BOSS_DEFAULT_HP = 100;
+    public static final int BOSS_DEFAULT_ENERGY = 100;
+    public static final int HERO_DEFAULT_HP = 100;
+    public static final int HERO_DEFAULT_ENERGY = 100;
 
     /**
      * 보스 스킬 특정 상태값

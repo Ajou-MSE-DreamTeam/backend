@@ -143,7 +143,7 @@ public class RoomController {
 
         try {
             gameSyncService.waitUntilEveryoneIsReady(roomId);
-            roomService.setGameStartedAt(roomId, LocalDateTime.now());
+            roomService.gameStart(roomId);
         } catch (Exception ex) {
             roomService.init(roomId);
             throw ex;

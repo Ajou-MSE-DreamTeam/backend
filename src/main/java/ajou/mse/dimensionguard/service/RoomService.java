@@ -9,6 +9,7 @@ import ajou.mse.dimensionguard.domain.player.Player;
 import ajou.mse.dimensionguard.dto.room.RoomDto;
 import ajou.mse.dimensionguard.dto.room.response.CheckGameStartResponse;
 import ajou.mse.dimensionguard.exception.room.AlreadyParticipatingException;
+import ajou.mse.dimensionguard.exception.room.NoBossException;
 import ajou.mse.dimensionguard.exception.room.RoomIdNotFoundException;
 import ajou.mse.dimensionguard.exception.room.RoomNotFoundByMemberIdException;
 import ajou.mse.dimensionguard.repository.room.RoomRepository;
@@ -98,11 +99,14 @@ public class RoomService {
     }
 
     @Transactional
-    public void setGameStartedAt(Long roomId, LocalDateTime startedAt) {
+    public void gameStart(Long roomId) {
         Room room = findById(roomId);
-        if (room.getGameStartedAt() == null) {
-            room.setGameStartedAt(startedAt);
+        if (room.getGameStartedAt() == null) {  // 게임 시작 시각은 한 번만 초기화 되어야 함
+            room.setGameStartedAt(LocalDateTime.now());
         }
+
+        Boss boss = getBossFromRoom(room);
+        boss.initHp(room.getPlayers().size());
     }
 
     @Transactional
@@ -117,5 +121,13 @@ public class RoomService {
         if (optionalPlayer.isPresent()) {
             throw new AlreadyParticipatingException(optionalPlayer.get().getRoom().getId());
         }
+    }
+
+    private Boss getBossFromRoom(Room room) {
+        return room.getPlayers().stream()
+                .filter(player -> player instanceof Boss)
+                .map(Boss.class::cast)
+                .findFirst()
+                .orElseThrow(NoBossException::new);
     }
 }
