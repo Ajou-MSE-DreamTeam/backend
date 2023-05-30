@@ -106,7 +106,7 @@ public class RoomService {
         }
 
         Boss boss = getBossFromRoom(room);
-        boss.initHp(room.getPlayers().size());
+        boss.initHp(room.getPlayers().size() - 1);
     }
 
     @Transactional
