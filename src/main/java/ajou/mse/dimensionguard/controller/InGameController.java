@@ -10,7 +10,6 @@ import ajou.mse.dimensionguard.service.InGameService;
 import ajou.mse.dimensionguard.service.RecordService;
 import ajou.mse.dimensionguard.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -70,8 +69,11 @@ public class InGameController {
         GameResult gameResult = inGameService.isGameEnded(roomId);
         if (gameResult != GameResult.NOT_END) {
             RoomDto roomDto = roomService.findDtoById(roomId);
-            recordService.record(roomDto, gameResult);
-            roomService.deleteWithPlayers(roomId);
+            // Host만 record를 생성하고 room을 삭제하도록 하여 중복 생성되는 문제 상황을 방지한다.
+            if (roomDto.getCreatedBy().equals(userPrincipal.getMemberId())) {
+                recordService.record(roomDto, gameResult);
+                roomService.deleteWithPlayers(roomId);
+            }
         }
 
         return inGameData;
