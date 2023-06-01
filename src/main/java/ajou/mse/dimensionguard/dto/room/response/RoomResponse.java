@@ -20,6 +20,9 @@ public class RoomResponse {
 
     private RoomStatus status;
 
+    @Schema(description = "Id of selected map")
+    private Integer mapId;
+
     @Schema(description = "<p>When the game started(ISO 8601 format)" +
             "<p><code>null</code> if the game has not started.",
             example = "2023-05-10T17:48:54.393181")
@@ -32,6 +35,7 @@ public class RoomResponse {
         return new RoomResponse(
                 dto.getId(),
                 dto.getStatus(),
+                dto.getMapId(),
                 dto.getGameStartedAt(),
                 dto.getPlayerDtos().stream()
                         .map(PlayerCompactResponse::from)

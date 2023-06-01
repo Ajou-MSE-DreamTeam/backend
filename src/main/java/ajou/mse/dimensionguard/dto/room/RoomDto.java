@@ -15,6 +15,7 @@ public class RoomDto {
 
     private Long id;
     private RoomStatus status;
+    private Integer mapId;
     private LocalDateTime gameStartedAt;
     private List<PlayerDto> playerDtos;
     private LocalDateTime createdAt;
@@ -26,6 +27,7 @@ public class RoomDto {
         return new RoomDto(
                 room.getId(),
                 room.getStatus(),
+                room.getMapId(),
                 room.getGameStartedAt(),
                 room.getPlayers().stream()
                         .map(PlayerDto::from)
