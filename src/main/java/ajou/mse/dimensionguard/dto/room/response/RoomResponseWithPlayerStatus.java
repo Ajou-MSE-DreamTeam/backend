@@ -18,12 +18,16 @@ public class RoomResponseWithPlayerStatus {
 
     private RoomStatus status;
 
+    @Schema(description = "Id of selected map")
+    private Integer mapId;
+
     private List<PlayerCompactResponseWithReadyStatus> players;
 
     public static RoomResponseWithPlayerStatus from(RoomDto dto) {
         return new RoomResponseWithPlayerStatus(
                 dto.getId(),
                 dto.getStatus(),
+                dto.getMapId(),
                 dto.getPlayerDtos().stream()
                         .map(PlayerCompactResponseWithReadyStatus::from)
                         .toList()

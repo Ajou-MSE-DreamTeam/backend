@@ -24,6 +24,11 @@ public class ConstantUtil {
     public static final int SKILL_USING = -1;
 
     /**
+     * Game 관련
+     */
+    public static final int NUM_OF_MAPS = 3;
+
+    /**
      * <p>Sync 관련
      * <p>{@link GameSyncService}
      */
