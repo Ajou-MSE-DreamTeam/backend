@@ -12,7 +12,7 @@ public class ConstantUtil {
     /**
      * Player 관련
      */
-    public static final int BOSS_DEFAULT_HP = 100;
+    public static final int BOSS_DEFAULT_HP = 200;
     public static final int BOSS_DEFAULT_ENERGY = 100;
     public static final int HERO_DEFAULT_HP = 100;
     public static final int HERO_DEFAULT_ENERGY = 100;
